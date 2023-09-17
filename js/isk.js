@@ -44,3 +44,28 @@ drawBoard();
 
 
 //?
+
+///////////////////////////////////////////////////
+
+// function drawBoard() {
+//     for (let i = 0; i < Board.length; i++) {
+//         for (let j = 0; j < Board[i].length; j++) {
+//             if (Board[i][j] === 3) {
+//                 let brickX = j * 100;    새롭게 받아야하기에 let
+//                 let brickY = i * 30;
+
+               // 충돌 감지
+//                 if(ball.x < brickX + block_width && ball.x 
+//                      + ball.radius > brickX && ball.y < brickY 
+//                        + block_height && ball.y + ball.radius > brickY) {
+//                          
+                             // 충돌 발생
+//                              Board[i][j] -= 1;  // 벽돌 상태 변경
+//                               dy = -dy;  // 공의 방향 변경
+//                 }
+
+//                 drawBrick(j, i);
+//             }
+//         }
+//     }
+// }
