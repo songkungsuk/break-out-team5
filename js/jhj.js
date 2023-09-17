@@ -34,3 +34,6 @@ function draw() {  // x,y좌표를 통해 공그림
 }
 
 setInterval(draw, 20); // setinterval 로 10초마다 공 그림.
+
+
+//var XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

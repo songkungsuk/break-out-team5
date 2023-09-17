@@ -37,3 +37,6 @@ drawBoard();
 // drawBall();
 // drawBoard(); 
 //이런식으로 다른 js에 옮기면 인터벌로 draw어쩌고가 정상 호출 할 수 있을 거라 생각됨...
+
+
+//?
