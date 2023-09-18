@@ -1,8 +1,9 @@
+//여기 변수이름수정하면 다른것들 다안됨 수정 X
 // Canvas 요소 
-var canvas = document.getElementById("gameCanvas");  //getElementById -> querySelector
-var ctx = canvas.getContext("2d"); // var -> let, const
-var x = canvas.width / 2;
-var y = canvas.height - 30;
+const canvas = document.getElementById("gameCanvas");  //getElementById -> querySelector
+const ctx = canvas.getContext("2d"); // var -> let, const
+let x = canvas.width / 2;
+let y = canvas.height - 30;
 
 // Score 변수
 var score = 0; 

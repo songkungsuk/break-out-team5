@@ -19,9 +19,9 @@ function drawBall() {
   ctx.closePath();
 }
 
-function draw() {
+function drawMoveBall() {
   // x,y좌표를 통해 공그림
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
   drawBall();
 
   if (x + dx > canvas.width - ballSize || x + dx < ballSize) {
@@ -36,6 +36,6 @@ function draw() {
   y += dy;
 }
 
-setInterval(draw, 20); // setinterval 로 10초마다 공 그림.
 
-//var XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+//  x y 변수타입..?

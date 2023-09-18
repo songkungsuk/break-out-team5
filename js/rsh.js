@@ -7,7 +7,7 @@ let paddleXPosition = (canvas.width - paddleWidth) / 2;     // 공 받이의 x�
 
 // 공 받이 그리는 함수
 function drawPaddle() { // 이 펑션 jhj.js의 draw() 펑션에 넣어야 될 것 같은데 나중에 넣을 예정
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
     ctx.beginPath();
     ctx.rect(paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
     ctx.fillStyle = "#00FF00";
