@@ -20,9 +20,19 @@ function drawMoveBall() {
     // 좌,우 둘 중에 하나라도 벽에 부딪히면 공이 dx에서 -dx음수 값으로 변하면서 공이 반대방향으로 튐.
     dx = -dx;
   }
-  if (y + dy > canvas.height - ballSize || y + dy < ballSize) {
+  if (y + dy < ballSize) {
     // 상,하단 둘 중에 하나라도 벽에 부딪히면 공이 dy에서 -dy로 뀌면서 공이 반대로 튀게됨
     dy = -dy;
+  } else if (y + dy > canvas.height - 100 - ballSize) {
+    // 26번줄 ~ 36번줄 - 류승호가 추가하였습니다. 패달에 맞으면 튀김
+    if(x > paddleXPosition && x < paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
+        dy = -dy;
+    } 
+  } if (y + dy > canvas.height - ballSize) {  // 여기는 else if로하면 적용이 안됨..아마 위에 else if에 걸려서 그런것 같은데?
+    // 바닥에 닿으면 게임 종료 후 새로고침
+    alert("게임 종료ㅋㅋ")
+    clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
+    document.location.reload();
   }
   x += dx;
   y += dy;
