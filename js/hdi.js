@@ -3,7 +3,7 @@
 const canvas = document.getElementById("gameCanvas");  //getElementById -> querySelector 
 const ctx = canvas.getContext("2d"); // var -> let, const
 let x = canvas.width / 2; 
-let y = canvas.height - 30;
+let y = canvas.height - 150;    // 공 시작 위치인 것 같은데 패달보다 위에서 시작하게 하려고 수치 조금 바꿈
 //----------------------------------------------------------------
 // Score 변수
 var score = 0; //var ->let
