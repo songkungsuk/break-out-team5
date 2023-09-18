@@ -28,4 +28,4 @@ function drawMoveBall() {
   y += dy;
 }
 
-//  x y 변수타입..?
+//신기하네요..

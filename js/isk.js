@@ -26,7 +26,9 @@ function drawBoard() {
         const brickX = j * (block_width + 5) + 45; // x좌표값 계산
         const brickY = i * (block_height + 5) + 10; // y 좌표값 계산
 
+        
         // 충돌 감지 및 블록 그리기
+        // 공이 그려지는좌표가 블럭안으로 들어간경우
         if (
           x + ballSize > brickX &&
           x < brickX + block_width &&
@@ -38,11 +40,11 @@ function drawBoard() {
 
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize / 2;
+          const collisionY = y + ballSize / 2; 
 
           // 블록의 중심 좌표 계산
           const blockCenterX = brickX + block_width / 2;
-          const blockCenterY = brickY + block_height / 2;
+          const blockCenterY = brickY + block_height / 2; //+10하면위에서 때린 조건문을 걸수있고 -10하면 아래에서 때린거 걸수있음
 
           // 충돌 지점과 블록의 중심을 비교하여 이동 방향 변경
           if (collisionX < blockCenterX) {

@@ -1,18 +1,18 @@
-//여기 변수이름수정하면 다른것들 다안됨 수정 X
+//여기 변수이름수정하면 다른것들 다안됨 변수이름만 수정 X
 // Canvas 요소 
-const canvas = document.getElementById("gameCanvas");  //getElementById -> querySelector
+const canvas = document.getElementById("gameCanvas");  //getElementById -> querySelector 
 const ctx = canvas.getContext("2d"); // var -> let, const
-let x = canvas.width / 2;
+let x = canvas.width / 2; 
 let y = canvas.height - 30;
-
+//----------------------------------------------------------------
 // Score 변수
-var score = 0; 
+var score = 0; //var ->let
 
 // lives변수
-var lives = 0;
+var lives = 0; //var ->let
 
 // 게임 그리기 
-function draw() { //div요소로 변경 프론트에 너무없음  canvas로 글씨 쓰면 나중에 확대하면 깨짐.
+function draw() { //div요소로 변경바람 프론트에 너무없음  canvas로 글씨 쓰면 나중에 확대하면 깨짐.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 
