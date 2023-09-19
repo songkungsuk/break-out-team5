@@ -30,7 +30,7 @@ function drawMoveBall() {
     } 
   } if (y + dy > canvas.height - ballSize) {  // 여기는 else if로하면 적용이 안됨..아마 위에 else if에 걸려서 그런것 같은데? -> ?ㅋㅋ
     // 바닥에 닿으면 게임 종료 후 새로고침
-    // alert("게임 종료ㅋㅋ") //ㅋㅋ
+    alert("게임 종료ㅋㅋ") //ㅋㅋ
     clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
     document.location.reload();
   }
