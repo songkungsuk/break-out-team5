@@ -46,10 +46,14 @@ function drawBoard() {
           const blockCenterX = brickX + block_width / 2;
           const blockCenterY = brickY + block_height / 2; //+10하면위에서 때린 조건문을 걸수있고 -10하면 아래에서 때린거 걸수있음
 
+          // 위 아래  조건문 안에서
+          // 왼쪽 오른쪽 조건문을 추가하면되고 블럭의 오른쪽면 왼쪽면일때도 조건문추가하면 공이튕기는것을 자세하게 표현가능할듯함
           // 충돌 지점과 블록의 중심을 비교하여 이동 방향 변경
           if (collisionX < blockCenterX) {
+            
             dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
           } else {
+            
             dy = -dy; // 위 또는 아래에서 충돌한 경우 y 방향 변경
           }
         }
