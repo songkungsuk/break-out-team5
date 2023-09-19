@@ -6,7 +6,7 @@ const cols = 12; //열 개수
 
 const block_width = 87;
 const block_height = 20;
-
+let scoreTitle = document.querySelector('#score'); 
 const Board = [];
 
 for (let i = 0; i < rows; i++) {
@@ -37,6 +37,10 @@ function drawBoard() {
         ) {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
           Board[i][j] = 0;
+
+          if(Board[i][j] === 0){                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
+            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
+          }
 
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
