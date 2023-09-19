@@ -6,12 +6,9 @@ body {
 .container {
     display: block;
     width: 1080px;
-    height: 1015px;
+    height: 50vh;
     margin: auto;
-    margin-top: 7%;
-    margin-bottom: -10%;
     background-color: white;
-    border: 1px solid black;
 }
 
 canvas {
@@ -25,7 +22,7 @@ canvas {
 
 
 .header {
-    width: 100%;
+    width: 1080px;
     height: 50px;
     display: flex;
     justify-content: space-around;

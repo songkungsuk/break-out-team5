@@ -1,10 +1,10 @@
 // const canvas = document.querySelector('#block');
 // const context = canvas.getContext('2d'); //캔버스의 2d렌더링 컨텍스트
 
-const rows = 12; //행 개수
-const cols = 10; //열 개수
+const rows = 6; //행 개수
+const cols = 12; //열 개수
 
-const block_width = 85;
+const block_width = 87;
 const block_height = 20;
 
 const Board = [];
@@ -23,8 +23,8 @@ function drawBoard() {
   for (let i = 0; i < Board.length; i++) {
     for (let j = 0; j < Board[i].length; j++) {
       if (Board[i][j] === 1) {
-        const brickX = j * (block_width + 5) + 45; // x좌표값 계산
-        const brickY = i * (block_height + 5) + 10; // y 좌표값 계산
+        const brickX = j * (block_width + 1) + 15; // x좌표값 계산
+        const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
         
         // 충돌 감지 및 블록 그리기
