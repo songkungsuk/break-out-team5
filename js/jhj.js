@@ -23,7 +23,9 @@ function drawMoveBall() {
   if (y + dy < ballSize) {
     // 상,하단 둘 중에 하나라도 벽에 부딪히면 공이 dy에서 -dy로 뀌면서 공이 반대로 튀게됨
     dy = -dy;
-  } else if (y + dy > canvas.height - 100 - ballSize) {
+  }
+  // else if 인거 if로 수정 그리고 100 -> 90으로 수정 패들을 얇게해서 얇아진만큼 타점을 조정했음 -송경석-
+  if (y + dy > canvas.height - 90 - ballSize) {
     // 26번줄 ~ 36번줄 - 류승호가 추가하였습니다. 패달에 맞으면 튀김
     if(x > paddleXPosition && x < paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
         dy = -dy;

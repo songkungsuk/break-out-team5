@@ -1,7 +1,7 @@
 // const canvas = document.querySelector('#block');
 // const ctx = canvas.getContext('2d');
 
-const paddleHeight = 15;
+const paddleHeight = 10;
 const paddleWidth = 150;
 let paddleXPosition = (canvas.width - paddleWidth) / 2;     // 공 받이의 x축 위치(가로 위치)
 

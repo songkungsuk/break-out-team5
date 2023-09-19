@@ -66,7 +66,7 @@ function drawBrick(x, y) {
   ctx.fillRect(45 + x * 100, 10 + y * 30, block_width, block_height); // x, y 좌표를 추가하여 벽돌을 생성(그림)
 } //fillRect를 사용하여 사각형으로 구성
 
-drawBoard();
+
 
 // 현재 test에 있는 js들이clearRect를 사용하기에 같이 돌리면 벽돌생성이 안되는 현상이 있음.
 // isk.js의 벽돌그리는 로직을
