@@ -13,10 +13,10 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j % 3 == 0 && i % 2 == 1) {
-      Board[i][j] = 0;
+    if (j % 3 == 0) {
+      Board[i][j] = 1;
     } else {
-      Board[i][j] = 0;
+      Board[i][j] = 2;
     }
 
   } //보드의 각 행을 초기화하는 반복문
@@ -78,7 +78,7 @@ function drawBoard() {
           //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
           // }
           // x,y 좌표를 기준으로 블럭이 처음들어갔을때
-          if (x <= blockX && x >= brickX && brickY <= y) {
+          if ( x >= brickX && brickY <= y) {
             dy = -dy;
           }
           else if (collisionX >= blockX && brickY >= y) {
