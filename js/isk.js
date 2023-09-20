@@ -90,7 +90,7 @@ function drawBoard() {
         if (Board[i][j] === 4) {
           Board[i][j] = 0; // 블럭을 그리지 않음
           const itemImage = new Image(); // 새 이미지 객체 생성
-          itemImage.src = "img/1.png"; // 아이템 이미지 파일 경로 설정
+          itemImage.src = "img/item_block.png"; // 아이템 이미지 파일 경로 설정
           let itemX = brickX; // 이미지를 그릴 x 좌표
           let itemY = brickY; // 이미지를 그릴 y 좌표
 
