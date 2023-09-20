@@ -6,7 +6,7 @@ const cols = 12; //열 개수
 
 const block_width = 87;
 const block_height = 20;
-let scoreTitle = document.querySelector('#score'); 
+let scoreTitle = document.querySelector('#score');
 const Board = [];
 
 for (let i = 0; i < rows; i++) {
@@ -26,7 +26,7 @@ function drawBoard() {
         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
-        
+
         // 충돌 감지 및 블록 그리기
         // 공이 그려지는좌표가 블럭안으로 들어간경우
         if (
@@ -38,27 +38,32 @@ function drawBoard() {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
           Board[i][j] = 0;
 
-          if(Board[i][j] === 0){                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
+          if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
             scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
           }
-
+// 45~69 정해준이 수정함.
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize / 2; 
-
+          const collisionY = y + ballSize / 2;
+        
           // 블록의 중심 좌표 계산
           const blockCenterX = brickX + block_width / 2;
-          const blockCenterY = brickY + block_height / 2; //+10하면위에서 때린 조건문을 걸수있고 -10하면 아래에서 때린거 걸수있음
-
-          // 위 아래  조건문 안에서
-          // 왼쪽 오른쪽 조건문을 추가하면되고 블럭의 오른쪽면 왼쪽면일때도 조건문추가하면 공이튕기는것을 자세하게 표현가능할듯함
-          // 충돌 지점과 블록의 중심을 비교하여 이동 방향 변경
+          const blockCenterY = brickY + block_height / 2;
+        
+          // 위쪽에서 충돌한 경우
+          if (collisionY < blockCenterY) {
+            dy = -dy; // 위에서 충돌한 경우 y 방향 변경
+          } else {
+            // 아래에서 충돌한 경우
+            dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+          }
+        
+          // 왼쪽에서 충돌한 경우
           if (collisionX < blockCenterX) {
-            
             dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
           } else {
-            
-            dy = -dy; // 위 또는 아래에서 충돌한 경우 y 방향 변경
+            // 오른쪽에서 충돌한 경우
+            dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
           }
         }
         // 블록을 그립니다.
