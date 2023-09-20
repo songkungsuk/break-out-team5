@@ -52,7 +52,7 @@ function drawBoard() {
           const collisionX = x + ballSize;
           const collisionY = y + ballSize;
         
-          // 블록의 중심 좌표 계산 
+          // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
           const blockCenterX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
           const blockCenterY = brickY + block_height;
           
