@@ -47,7 +47,7 @@ function drawBoard() {
           if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
             scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
           }
-          // 45~69 정해준이 수정함.
+          // 45~69 정해준이 수정함. 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
           const collisionX = x+ ballSize;
           const collisionY = y+ ballSize;
