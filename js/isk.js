@@ -45,9 +45,9 @@ function drawBoard() {
           Board[i][j] -= 1;
 
           if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
-            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
+            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;               // 수정하셔도 됩니다  
           }
-// 45~69 정해준이 수정함.
+          // 45~69 정해준이 수정함.
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
           const collisionY = y + ballSize / 2;
@@ -69,7 +69,7 @@ function drawBoard() {
             dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
           } else {
             // 오른쪽에서 충돌한 경우
-            dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
+            dx = dx; // 오른쪽에서 충돌한 경우 x 방향 변경
           }
         }
         //-------------------------- 송경석--------------
