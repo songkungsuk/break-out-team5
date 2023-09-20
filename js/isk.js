@@ -53,11 +53,11 @@ function drawBoard() {
           const collisionY = y + ballSize;
         
           // 블록의 중심 좌표 계산
-          const blockCenterX = brickX + block_width / 2;
-          const blockCenterY = brickY + block_height / 2;
+          const blockCenterX = brickX + block_width;
+          const blockCenterY = brickY + block_height;
           
           // 왼쪽 오른쪽에서 충돌한 경우
-          if (collisionY < brickY+block_height) {
+          if (collisionY < blockCenterY) {
             dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
           } else if (collisionY < brickY){
             // 아래에서 충돌한 경우
@@ -67,7 +67,7 @@ function drawBoard() {
           // 위 아래 에서 충돌한 경우
           if (collisionX < brickX) { 
             dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
-          } else if (collisionX < brickX+block_width){
+          } else if (collisionX < blockCenterX){
             dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
             
           }
