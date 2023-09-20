@@ -33,43 +33,64 @@ function drawBoard() {
         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
+        
         // 충돌 감지 및 블록 그리기
         // 공이 그려지는좌표가 블럭안으로 들어간경우
         if (
-          x + ballSize > brickX &&
-          x < brickX + block_width &&
-          y + ballSize > brickY &&
-          y < brickY + block_height
+          x + ballSize >= brickX &&
+          x <= brickX + block_width &&
+          y + ballSize >= brickY &&
+          y <= brickY + block_height
         ) {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
           Board[i][j] -= 1;
 
-          if (Board[i][j] === 0) {
-            // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
-            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10; // 수정하셔도 됩니다
+          if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
+            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
           }
-          // 45~69 정해준이 수정함.
+          // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
-          const collisionX = x + ballSize;
+          const collisionX = x + ballSize / 2;
           const collisionY = y + ballSize;
+          console.log('충돌지점 x' + collisionX);
+          console.log('충돌지점 y' + collisionY);
+          console.log('블럭 좌표 x' + brickX);
+          console.log('x좌표' + x);
+          console.log('블럭 좌표 y' + brickY);
+          console.log('y좌표' + y);
 
-          // 블록의 오른쪽끝 아래쪽끝 좌표 계산
-          const blockCenterX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
-          const blockCenterY = brickY + block_height;
+          // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
+          const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
+          const blockY = brickY + block_height;
 
-          // 왼쪽 오른쪽에서 충돌한 경우
-          if (collisionY < blockCenterY) {
-            dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
-          } else if (collisionY < brickY) {
-            // 아래에서 충돌한 경우
-            dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
+          // // 왼쪽 오른쪽에서 충돌한 경우
+          // if (collisionY < blockY) {
+          //   dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
+          // } 
+          // if (collisionY < brickY) {
+          //   // 아래에서 충돌한 경우
+          //   dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
+          // }
+
+          // // 위 아래 에서 충돌한 경우
+          // if (collisionX < brickX) {
+          //   dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
+          // } else if (collisionX < blockX) {
+          //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+          // }
+          // x,y 좌표를 기준으로 블럭이 처음들어갔을때
+          if ( x >= brickX && brickY <= y) {
+            dy = -dy;
+          }
+          else if (collisionX >= blockX && brickY >= y) {
+            dy = -dy;
           }
 
-          // 위 아래 에서 충돌한 경우
-          if (collisionX < brickX) {
-            dy = -dy; // 위에서 충돌한 경우 y 방향 변경
-          } else if (collisionX < blockCenterX) {
-            dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+          if (collisionY >= brickY && collisionY <= blockY && brickX >= x) {
+            dx = -dx;
+          }
+          else if (collisionY >= brickY && collisionY <= blockY && brickX - block_width <= x) {
+            dx = -dx;
           }
         }
         //-------------------------- 송경석--------------
