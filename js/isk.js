@@ -13,7 +13,7 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j % 2 === 0) {
+    if (j % 3 == 0) {
       Board[i][j] = 1;
     } else {
       Board[i][j] = 2;
