@@ -115,7 +115,7 @@ function animateItem(image, x, y) {
     ctx.clearRect(x, y - 10, image.width, image.height + 10); // 기존 이미지를 지우기
     drawItem(image, x, y); // 이동된 위치에 이미지 다시 그리기
     requestAnimationFrame(() => animateItem(image, x, y)); // 다음 프레임에서 반복 실행
-  }
+  } 
 } 
 
       }
