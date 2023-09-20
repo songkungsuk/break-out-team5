@@ -12,7 +12,7 @@ const Board = [];
 for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
-    //임시로 이렇게 초기화 했음
+    //임시로 이렇게 초기화 했음 -경석-
     if(j % 2 === 0){
       Board[i][j] = 1;
     }else{
@@ -70,25 +70,25 @@ function drawBoard() {
           }
         }
         //-------------------------- 송경석--------------
-        if (Board[i][j] == 0) {
+        if (Board[i][j] === 0) {
           //블럭 안그림
         }
-        if (Board[i][j] == 1) {
+        if (Board[i][j] === 1) {
           // 블록을 그립니다.
           ctx.fillStyle = "skyblue";
           ctx.fillRect(brickX, brickY, block_width, block_height);
           //일반 블럭 그림
         }
-        if (Board[i][j] == 2) {
+        if (Board[i][j] === 2) {
           //강화 블럭 그림
           ctx.fillStyle = "red";
           ctx.fillRect(brickX, brickY, block_width, block_height);
         }
-        if (Board[i][j] == 4) {
+        if (Board[i][j] === 4) {
           Board[i][j] == 0; // 블럭을 그리지 않음
           //아이템 블럭떨구는 함수.
         }
-        if (Board[i][j] == 9) {
+        if (Board[i][j] === 9) {
           //Board[i][j] == 10; // 블럭상태유지
 
         }
