@@ -30,7 +30,7 @@ function drawMoveBall() {
     if(x >= paddleXPosition && x <= paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
       console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
       if(x < paddleXPosition + (paddleWidth/8)) { // paddleWidth - paddleWidth/8 = 18.??
-        dx = -4;
+        dx = -3;
         console.log('맞은 부분 = 1/8, x축 속도 = ' + dx + '로 변경');
       } 
       if(x === (paddleXPosition + paddleWidth)/2) {
@@ -38,7 +38,7 @@ function drawMoveBall() {
         console.log('맞은 부분 = 정중앙, x축 속도 = ' + dx + '로 변경');
       }
       else if(x < paddleXPosition + (paddleWidth/8) * 2) {
-        dx = -3;
+        dx = -2.5;
         console.log('맞은 부분 = 2/8, x축 속도 = ' + dx + '로 변경');
       } else if(x < paddleXPosition + (paddleWidth/8) * 3) {
         dx = -2;
@@ -53,10 +53,10 @@ function drawMoveBall() {
         dx = 2;
         console.log('맞은 부분 = 6/8, x축 속도 = ' + dx + '로 변경');
       } else if(x < paddleXPosition + (paddleWidth/8) * 7) {
-        dx = 3;
+        dx = 2.5;
         console.log('맞은 부분 = 7/8, x축 속도 = ' + dx + '로 변경');
       } else if(x <= paddleXPosition + (paddleWidth/8) * 8) {
-        dx = 4;
+        dx = 3;
         console.log('맞은 부분 = 8/8, x축 속도 = ' + dx + '로 변경');
       } 
       dy = -dy;
