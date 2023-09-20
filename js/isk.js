@@ -12,7 +12,13 @@ const Board = [];
 for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
-    Board[i][j] = 1;
+    //임시로 이렇게 초기화 했음 -경석-
+    if(j % 2 === 0){
+      Board[i][j] = 1;
+    }else{
+      Board[i][j] = 2;
+    }
+    
   } //보드의 각 행을 초기화하는 반복문
 }
 /*
@@ -22,7 +28,7 @@ for (let i = 0; i < rows; i++) {
 function drawBoard() {
   for (let i = 0; i < Board.length; i++) {
     for (let j = 0; j < Board[i].length; j++) {
-      if (Board[i][j] === 1) {
+      if (Board[i][j] >= 1) { // 1 이상으로 설정하면 다양한 블록들을 처리할수있겠지.
         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
@@ -36,7 +42,7 @@ function drawBoard() {
           y < brickY + block_height
         ) {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
-          Board[i][j] = 0;
+          Board[i][j] -= 1;
 
           if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
             scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
@@ -66,9 +72,30 @@ function drawBoard() {
             dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
           }
         }
-        // 블록을 그립니다.
-        ctx.fillStyle = "skyblue";
-        ctx.fillRect(brickX, brickY, block_width, block_height);
+        //-------------------------- 송경석--------------
+        if (Board[i][j] === 0) {
+          //블럭 안그림
+        }
+        if (Board[i][j] === 1) {
+          // 블록을 그립니다.
+          ctx.fillStyle = "skyblue";
+          ctx.fillRect(brickX, brickY, block_width, block_height);
+          //일반 블럭 그림
+        }
+        if (Board[i][j] === 2) {
+          //강화 블럭 그림
+          ctx.fillStyle = "red";
+          ctx.fillRect(brickX, brickY, block_width, block_height);
+        }
+        if (Board[i][j] === 4) {
+          Board[i][j] == 0; // 블럭을 그리지 않음
+          //아이템 블럭떨구는 함수.
+        }
+        if (Board[i][j] === 9) {
+          //Board[i][j] == 10; // 블럭상태유지
+
+        }
+        //-------------------------------------------------
       }
     }
   }

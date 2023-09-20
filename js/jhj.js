@@ -1,5 +1,5 @@
-let dx = 8; // x축 방향으로 움직이는 속도 초기화한 값
-let dy = -8; // y축 방향으로 움직이는 속도 초기화한 값.
+let dx = 4; // x축 방향으로 움직이는 속도 초기화한 값
+let dy = -4; // y축 방향으로 움직이는 속도 초기화한 값.
 const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 
 function drawBall() {
@@ -25,12 +25,13 @@ function drawMoveBall() {
     dy = -dy;
   }
   // else if 인거 if로 수정 그리고 100 -> 90으로 수정 패들을 얇게해서 얇아진만큼 타점을 조정했음 -송경석-
-  if (y + dy > canvas.height - 90 - ballSize) {
+  if ((y + dy > canvas.height - 90 - ballSize) && (y + dy < canvas.height - 80 - ballSize)) {
     // 26번줄 ~ 36번줄 - 류승호가 추가하였습니다. 패달에 맞으면 튀김
     if(x > paddleXPosition && x < paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
-        dy = -dy;
+      dy = -dy;
     } 
-  } if (y + dy > canvas.height - ballSize) {  // 여기는 else if로하면 적용이 안됨..아마 위에 else if에 걸려서 그런것 같은데? -> ?ㅋㅋ
+  } 
+  if (y + dy > canvas.height) {  
     // 바닥에 닿으면 게임 종료 후 새로고침
     alert("게임 종료ㅋㅋ") //ㅋㅋ
     clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
