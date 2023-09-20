@@ -90,8 +90,12 @@ function drawBoard() {
           ctx.fillRect(brickX, brickY, block_width, block_height);
         }
         if (Board[i][j] === 4) {
-          Board[i][j] == 0; // 블럭을 그리지 않음
+          Board[i][j] == 0; // 블럭을 그리지 않음 
           //아이템 블럭떨구는 함수.
+        }
+        if (Board[i][j] === 5) {
+          ctx.fillStyle = "green";
+          ctx.fillRect(brickX, brickY, block_width, block_height);
         }
         if (Board[i][j] === 9) {
           Board[i][j] += 1; // 블럭상태유지

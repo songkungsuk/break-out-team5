@@ -9,13 +9,17 @@ const heightBlockCount = 5;
 
 mainContext.fillStyle = "#98DFFF"
 
-for (let i = 0; i < widthBlockCount; i++) {
-    for (let j = 0; j < heightBlockCount; j++) {
-        mainContext.fillRect(
-            5+blockSpace * i + blockWidth * i,
-            5+blockSpace * j + blockHeight * j,
-            blockWidth,
-            blockHeight
-        );
+const img = new Image();
+img.src = '../img/1.png';
+
+
+img.onload = function () {
+    for (let i = 0; i < widthBlockCount; i++) {
+        for (let j = 0; j < heightBlockCount; j++) {
+            let brickX = j * (blockWidth + 1) + 15; // x좌표값 계산
+            let brickY = i * (blockHeight + 1) + 10; // y 좌표값 계산
+            mainContext.drawImage(img, brickX, brickY, blockWidth, blockHeight);
+        }
     }
+
 }
