@@ -13,10 +13,10 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j % 2 === 0) {
-      Board[i][j] = 1;
+    if (j % 3 == 0 && i % 2 == 1) {
+      Board[i][j] = 0;
     } else {
-      Board[i][j] = 2;
+      Board[i][j] = 0;
     }
 
   } //보드의 각 행을 초기화하는 반복문
@@ -49,21 +49,21 @@ function drawBoard() {
           }
           // 45~69 정해준이 수정함. 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
-          const collisionX = x+ ballSize;
-          const collisionY = y+ ballSize;
-          // console.log('충돌지점 x' + collisionX);
-          // console.log('충돌지점 y' + collisionY);
-          // console.log('블럭 좌표 x' + brickX);
-          // console.log('블럭 좌표 y' + brickY);
-          // console.log('x좌표' + x);
-          // console.log('y좌표' + y);
+          const collisionX = x + ballSize / 2;
+          const collisionY = y + ballSize;
+          console.log('충돌지점 x' + collisionX);
+          console.log('충돌지점 y' + collisionY);
+          console.log('블럭 좌표 x' + brickX);
+          console.log('x좌표' + x);
+          console.log('블럭 좌표 y' + brickY);
+          console.log('y좌표' + y);
 
           // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
-          const blockCenterX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
-          const blockCenterY = brickY + block_height;
+          const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
+          const blockY = brickY + block_height;
 
           // // 왼쪽 오른쪽에서 충돌한 경우
-          // if (collisionY < blockCenterY) {
+          // if (collisionY < blockY) {
           //   dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
           // } 
           // if (collisionY < brickY) {
@@ -71,22 +71,24 @@ function drawBoard() {
           //   dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
           // }
 
-          // 위 아래 에서 충돌한 경우
-          if (collisionX < brickX) {
-            dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
-          } else if (collisionX < blockCenterX) {
-            dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
-          }
-          if(collisionX <= blockCenterX &&  collisionX >= brickX && brickY >= y){
+          // // 위 아래 에서 충돌한 경우
+          // if (collisionX < brickX) {
+          //   dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
+          // } else if (collisionX < blockX) {
+          //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+          // }
+          // x,y 좌표를 기준으로 블럭이 처음들어갔을때
+          if (x <= blockX && x >= brickX && brickY <= y) {
             dy = -dy;
           }
-          if(collisionX <= blockCenterX &&  collisionX >= brickX && brickY-block_height >= y){
+          else if (collisionX >= blockX && brickY >= y) {
             dy = -dy;
           }
-          if(collisionY >= brickY && collisionY <= blockCenterY && brickX >= x){
+
+          if (collisionY >= brickY && collisionY <= blockY && brickX >= x) {
             dx = -dx;
           }
-          if(collisionY >= brickY && collisionY <= blockCenterY && brickX-block_width <= x){
+          else if (collisionY >= brickY && collisionY <= blockY && brickX - block_width <= x) {
             dx = -dx;
           }
         }
