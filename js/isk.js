@@ -22,7 +22,7 @@ for (let i = 0; i < rows; i++) {
 function drawBoard() {
   for (let i = 0; i < Board.length; i++) {
     for (let j = 0; j < Board[i].length; j++) {
-      if (Board[i][j] === 1) {
+      if (Board[i][j] === 1) { // 1 이상으로 설정하면 다양한 블록들을 처리할수있겠지.
         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
