@@ -116,7 +116,7 @@ function animateItem(image, x, y) {
     drawItem(image, x, y); // 이동된 위치에 이미지 다시 그리기
     requestAnimationFrame(() => animateItem(image, x, y)); // 다음 프레임에서 반복 실행
   }
-}
+} 
 
       }
       if (Board[i][j] === 5) {
