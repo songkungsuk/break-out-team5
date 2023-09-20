@@ -33,7 +33,7 @@ function drawBoard() {
         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
-        
+
         // 충돌 감지 및 블록 그리기
         // 공이 그려지는좌표가 블럭안으로 들어간경우
         if (
@@ -79,7 +79,7 @@ function drawBoard() {
           //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
           // }
           // x,y 좌표를 기준으로 블럭이 처음들어갔을때
-          if ( x >= brickX && brickY <= y) {
+          if (x >= brickX && brickY <= y) {
             dy = -dy;
           }
           else if (collisionX >= blockX && brickY >= y) {
@@ -99,14 +99,12 @@ function drawBoard() {
         }
         if (Board[i][j] === 1) {
           // 블록을 그립니다.
-          ctx.fillStyle = "skyblue";
-          ctx.fillRect(brickX, brickY, block_width, block_height);
-          //일반 블럭 그림
+          // 일반 블럭 그림
+          ctx.drawImage(nomal_block, brickX, brickY);
         }
         if (Board[i][j] === 2) {
           //강화 블럭 그림
-          ctx.fillStyle = "red";
-          ctx.fillRect(brickX, brickY, block_width, block_height);
+          ctx.drawImage(strong_block, brickX, brickY);
         }
         if (Board[i][j] === 4) {
           Board[i][j] = 0; // 블럭을 그리지 않음
@@ -134,17 +132,14 @@ function drawBoard() {
         }
 
         if (Board[i][j] === 5) {
-          ctx.fillStyle = "green";
-          ctx.fillRect(brickX, brickY, block_width, block_height);
+          ctx.drawImage(itemImage, brickX, brickY);
         }
         if (Board[i][j] === 9) {
           Board[i][j] += 1; // 블럭상태유지
-          ctx.fillStyle = "black";
-          ctx.fillRect(brickX, brickY, block_width, block_height);
+          ctx.drawImage(nobroken_block, brickX, brickY);
         }
         if (Board[i][j] === 10) {
-          ctx.fillStyle = "black";
-          ctx.fillRect(brickX, brickY, block_width, block_height);
+          ctx.drawImage(nobroken_block, brickX, brickY);
         }
         //-------------------------------------------------
       }
