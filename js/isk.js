@@ -13,12 +13,12 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if(j % 2 === 0){
+    if (j % 2 === 0) {
       Board[i][j] = 1;
-    }else{
+    } else {
       Board[i][j] = 2;
     }
-    
+
   } //보드의 각 행을 초기화하는 반복문
 }
 /*
@@ -51,25 +51,25 @@ function drawBoard() {
           // 충돌 지점 계산
           const collisionX = x + ballSize;
           const collisionY = y + ballSize;
-        
+
           // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
           const blockCenterX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
           const blockCenterY = brickY + block_height;
-          
+
           // 왼쪽 오른쪽에서 충돌한 경우
           if (collisionY < blockCenterY) {
             dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
-          } else if (collisionY < brickY){
+          } else if (collisionY < brickY) {
             // 아래에서 충돌한 경우
             dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
           }
-        
+
           // 위 아래 에서 충돌한 경우
-          if (collisionX < brickX) { 
+          if (collisionX < brickX) {
             dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
-          } else if (collisionX < blockCenterX){
+          } else if (collisionX < blockCenterX) {
             dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
-            
+
           }
         }
         //-------------------------- 송경석--------------
@@ -92,15 +92,20 @@ function drawBoard() {
           //아이템 블럭떨구는 함수.
         }
         if (Board[i][j] === 9) {
-          //Board[i][j] == 10; // 블럭상태유지
-
+          Board[i][j] += 1; // 블럭상태유지
+          ctx.fillStyle = "black";
+          ctx.fillRect(brickX, brickY, block_width, block_height);
+        }
+        if (Board[i][j] === 10) {
+          ctx.fillStyle = "black";
+          ctx.fillRect(brickX, brickY, block_width, block_height);
         }
         //-------------------------------------------------
       }
     }
   }
 }
-
+// ?
 function drawBrick(x, y) {
   ctx.fillStyle = "skyblue";
   ctx.fillRect(45 + x * 100, 10 + y * 30, block_width, block_height); // x, y 좌표를 추가하여 벽돌을 생성(그림)
