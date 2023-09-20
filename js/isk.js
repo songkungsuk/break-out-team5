@@ -47,29 +47,29 @@ function drawBoard() {
           if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
             scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
           }
-// 45~69 정해준이 수정함.
+          // 45~69 정해준이 수정함.
           // 충돌 지점 계산
-          const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize / 2;
+          const collisionX = x + ballSize;
+          const collisionY = y + ballSize;
         
           // 블록의 중심 좌표 계산
           const blockCenterX = brickX + block_width / 2;
           const blockCenterY = brickY + block_height / 2;
-        
-          // 위쪽에서 충돌한 경우
-          if (collisionY < blockCenterY) {
-            dy = -dy; // 위에서 충돌한 경우 y 방향 변경
-          } else {
+          
+          // 왼쪽 오른쪽에서 충돌한 경우
+          if (collisionY < brickY+block_height) {
+            dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
+          } else if (collisionY < brickY){
             // 아래에서 충돌한 경우
-            dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+            dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
           }
         
-          // 왼쪽에서 충돌한 경우
-          if (collisionX < blockCenterX) {
-            dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
-          } else {
-            // 오른쪽에서 충돌한 경우
-            dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
+          // 위 아래 에서 충돌한 경우
+          if (collisionX < brickX) { 
+            dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
+          } else if (collisionX < brickX+block_width){
+            dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+            
           }
         }
         //-------------------------- 송경석--------------
