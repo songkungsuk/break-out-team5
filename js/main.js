@@ -10,6 +10,7 @@ const interval = setInterval(function () {
     drawPaddle(); // 공받아치는 판
     drawMoveBall(); //공 그리기
     drawBoard(); //벽돌그리기
+    
 
 
 

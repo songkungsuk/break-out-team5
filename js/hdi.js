@@ -7,7 +7,7 @@ let y = canvas.height - 150;// 공 시작 위치인 것 같은데 패달보다 �
 
 // Score 변수
 let score = 0;//var ->let로 변경
-const scoreElement = document.querySelector("#score"); // -> 이거 지워도 되지 않을까요? score구현되어있는데
+const scoreElement = document.querySelector("#score");
 
 // lives 변수
 let lives = 0; //var ->let로 변경
