@@ -4,7 +4,7 @@ const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 
 function drawBall() {
   // 공 그리는 로직
-  ctx.drawImage(ballImage, x-5, y);
+  ctx.drawImage(ballImage, x - 10, y, 30, 30);
   // ctx.beginPath(); // 선 그림
   // ctx.arc(x, y, ballSize, 0, Math.PI * 2); // 곡선을 그려 공을 만들어냄.
   // ctx.fillStyle = "green";
@@ -28,47 +28,47 @@ function drawMoveBall() {
   // else if 인거 if로 수정 그리고 100 -> 90으로 수정 패들을 얇게해서 얇아진만큼 타점을 조정했음 -송경석-
   if ((y + dy > canvas.height - 100 - ballSize) && (y + dy < canvas.height - 90 - ballSize)) {
     // 26번줄 ~ 36번줄 - 류승호가 추가하였습니다. 패달에 맞으면 튀김
-    if(x >= paddleXPosition && x <= paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
+    if (x >= paddleXPosition && x <= paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
       console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
-      if(x < paddleXPosition + (paddleWidth/8)) { // paddleWidth - paddleWidth/8 = 18.??
+      if (x < paddleXPosition + (paddleWidth / 8)) { // paddleWidth - paddleWidth/8 = 18.??
         dx = -3;
         console.log('맞은 부분 = 1/8, x축 속도 = ' + dx + '로 변경');
-      } 
-      if(x === (paddleXPosition + paddleWidth)/2) {
+      }
+      if (x === (paddleXPosition + paddleWidth) / 2) {
         dx = 0;
         console.log('맞은 부분 = 정중앙, x축 속도 = ' + dx + '로 변경');
       }
-      else if(x < paddleXPosition + (paddleWidth/8) * 2) {
+      else if (x < paddleXPosition + (paddleWidth / 8) * 2) {
         dx = -2.5;
         console.log('맞은 부분 = 2/8, x축 속도 = ' + dx + '로 변경');
-      } else if(x < paddleXPosition + (paddleWidth/8) * 3) {
+      } else if (x < paddleXPosition + (paddleWidth / 8) * 3) {
         dx = -2;
         console.log('맞은 부분 = 3/8, x축 속도 = ' + dx + '로 변경');
-      } else if(x < paddleXPosition + (paddleWidth/8) * 4) {
+      } else if (x < paddleXPosition + (paddleWidth / 8) * 4) {
         dx = -1;
         console.log('맞은 부분 = 4/8, x축 속도 = ' + dx + '로 변경');
-      } else if(x < paddleXPosition + (paddleWidth/8) * 5) {
+      } else if (x < paddleXPosition + (paddleWidth / 8) * 5) {
         dx = 1;
         console.log('맞은 부분 = 5/8, x축 속도 = ' + dx + '로 변경');
-      } else if(x < paddleXPosition + (paddleWidth/8)* 6) {
+      } else if (x < paddleXPosition + (paddleWidth / 8) * 6) {
         dx = 2;
         console.log('맞은 부분 = 6/8, x축 속도 = ' + dx + '로 변경');
-      } else if(x < paddleXPosition + (paddleWidth/8) * 7) {
+      } else if (x < paddleXPosition + (paddleWidth / 8) * 7) {
         dx = 2.5;
         console.log('맞은 부분 = 7/8, x축 속도 = ' + dx + '로 변경');
-      } else if(x <= paddleXPosition + (paddleWidth/8) * 8) {
+      } else if (x <= paddleXPosition + (paddleWidth / 8) * 8) {
         dx = 3;
         console.log('맞은 부분 = 8/8, x축 속도 = ' + dx + '로 변경');
-      } 
+      }
       dy = -dy;
-    } 
-  } 
-  if (y + dy > canvas.height) {  
+    }
+  }
+  if (y + dy > canvas.height) {
     // 이미지 블럭 그릴려면 window.addEventListener() 해야하는데 이걸해버리면 Interval 함수가 안으로들어가버려서 사용을못해서..일단 임시로 이렇게하세요..ㅠㅜㅠ
     // 바닥에 닿으면 게임 종료 후 새로고침
     --life;
 
-    if(life === 0) {
+    if (life === 0) {
       alert("게임 종료ㅋㅋ") //ㅋㅋ
       clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
       document.location.reload();
@@ -77,9 +77,9 @@ function drawMoveBall() {
       // alert('목숨 감소');
       clearInterval(interval);
       isStarted = false;  // rsh.js에 마우스무브 이벤트에 있는 if(!isStarted) 때문에 적어놓음
-      dy=0;
+      dy = 0;
       y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
-      x = paddleXPosition + paddleWidth/2;
+      x = paddleXPosition + paddleWidth / 2;
       drawPaddle(); // 공받아치는 판
       drawBall(); //공 그리기
     }
