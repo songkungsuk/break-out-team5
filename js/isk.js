@@ -13,10 +13,10 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j % 3 == 0) {
-      Board[i][j] = 1;
-    } else {
+    if (j % 5 == 0) {
       Board[i][j] = 2;
+    } else {
+      Board[i][j] = 1;
     }
   } //보드의 각 행을 초기화하는 반복문
 }
