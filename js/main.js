@@ -14,6 +14,7 @@ window.addEventListener('load', function () {
     Board[1][6] = 2;
     Board[5][11] = 2;
 
+    dy=0;
     document.querySelector('#lives').innerText = life;
 
     //여기다 여러분들이 만든거 합칠생각중
@@ -25,6 +26,7 @@ window.addEventListener('load', function () {
         // 클릭해서 시작하면 시작 메시지 지우려고 만든거임. 임시로 만든거라 이상하면 업새도됨
         document.querySelector('#startMsg').innerHTML = '';
         isStarted = true;
+        dy=-4
 
         interval = setInterval(function () {
             //지우고 그리고 반복하겠지.. 충돌함수도 고려..
