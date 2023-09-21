@@ -109,59 +109,46 @@ function drawBoard() {
           ctx.drawImage(strong_block, brickX, brickY);
         }
         if (Board[i][j] === 4) {
-          Board[i][j] = 0; // 블럭을 그리지 않음
-
-          //const itemImage = new Image(); // 새 이미지 객체 생성
-          //itemImage.src = "img/item_block.png"; // 아이템 이미지 파일 경로 설정
-
-          // 이미지 3개 배열에 저장
+          Board[i][j] = 0; // Set the block state to 0 to remove it
+        
           const imageUrls = [
             "img/item_block.png",
             "img/strong_block.png",
             "img/nobroken_block.png",
           ];
           const randomImageUrl =
-            imageUrls[Math.floor(Math.random() * imageUrls.length)]; // imageUrls길이 만큼 출력
-
-          // 이미지 객체를 생성합니다.
+            imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        
           const chooseImage = new Image();
-
-          // 이미지가 로드되었을 때 실행되는 콜백 함수를 설정합니다.
+        
           chooseImage.onload = function () {
-            // 이미지가 성공적으로 로드되면 그리기 작업을 수행합니다.
-            animateItem(chooseImage, itemX, itemY);
+            animateItem(chooseImage, brickX, brickY);
           };
           chooseImage.src = randomImageUrl;
-
-          let itemX = brickX; // 이미지를 그릴 x 좌표
-          let itemY = brickY; // 이미지를 그릴 y 좌표
-
+        
+          let itemX = brickX;
+          let itemY = brickY;
+        
           function animateItem(chooseImage, x, y) {
-            const paddleY = canvas.height - paddleHeight; // 패들의 y 좌표
-            if (y + paddleY > canvas.height) {
+            const paddleY = canvas.height - paddleHeight;
+            if (y <= canvas.height) { 
+        
               ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
-
-              // 블록이 이제 지워짐
-            }
-            if ((y) => paddleY) {
-              // 이미지를 아래로 이동시키기
-              y += 5; // 이미지를 아래로 내리는 속도 및 값 조절 가능
-              ctx.clearRect(
-                x,
-                y + 2,
-                chooseImage.width,
-                chooseImage.height + 2
-              ); // 기존 이미지를 지우기
-              ctx.drawImage(chooseImage, x, y); // 이동된 위치에 이미지 다시 그리기
+              y += 5; //이미지 내려가는 속도 조절할 수 있음
+              ctx.drawImage(chooseImage, x, y);//이미지 그리는 
               if (
-                y > paddleXPosition - chooseImage.width &&
-                y > paddleY - chooseImage.width
+                x + chooseImage.width >= paddleXPosition &&  // 이미지랑 패들이랑 충돌했을때 점수 올라감 나머지는 안됨
+                x <= paddleXPosition + paddleWidth &&
+                y + chooseImage.height >= paddleY
               ) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
+                ctx.clearRect(x, y, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
+                Board[i][j] = 0;
               } else {
-                // 다음 프레임에서 반복 실행
                 requestAnimationFrame(() => animateItem(chooseImage, x, y));
               }
+              // 프레임 활용해서 다시 그림
+              
             }
           }
         }
