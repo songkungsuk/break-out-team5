@@ -8,6 +8,10 @@ window.addEventListener('load', function () {
     Board[4][10] = 10;
     Board[2][2] = 10;
     Board[5][10] = 5;
+    Board[3][6] = 2;
+    Board[2][1] = 2;
+    Board[1][6] = 2;
+    Board[5][11] = 2;
 
     //여기다 여러분들이 만든거 합칠생각중
     drawPaddle(); // 공받아치는 판
