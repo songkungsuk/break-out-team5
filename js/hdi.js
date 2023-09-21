@@ -14,6 +14,8 @@ const itemImage = new Image(); // 새 이미지 객체 생성
 itemImage.src = "img/item_block.png"; // 아이템 이미지 파일 경로 설정
 const paddleImage = new Image();
 paddleImage.src = "../img/paddle.png";
+const ballImage = new Image();
+ballImage.src = "../img/ball2.png";
 //----------------------------------------------------------------
 
 // Score 변수

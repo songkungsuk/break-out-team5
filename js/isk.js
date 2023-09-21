@@ -58,7 +58,7 @@ function drawBoard() {
           const blockY = brickY + block_height;
 
           // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
-          if (collisionX >= brickX-1 && collisionX <= blockX-1 || brickY < collisionY || brickY >= collisionY) {
+          if (collisionX >= brickX-1 && collisionX <= blockX-1 || brickY < collisionY || brickY > collisionY) {
             dy = -dy;
           }
           // 공의 중심좌표가 블럭의 좌측과 오른쪽에 있을때
