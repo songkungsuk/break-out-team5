@@ -66,9 +66,9 @@ function drawMoveBall() {
     // 이미지 블럭 그릴려면 window.addEventListener() 해야하는데 이걸해버리면 Interval 함수가 안으로들어가버려서 사용을못해서..일단 임시로 이렇게하세요..ㅠㅜㅠ
     
     // 바닥에 닿으면 게임 종료 후 새로고침
-    // alert("게임 종료ㅋㅋ") //ㅋㅋ
-    // clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
-    // document.location.reload();
+    alert("게임 종료ㅋㅋ") //ㅋㅋ
+    clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
+    document.location.reload();
     dy = -dy;
   }
   x += dx;
