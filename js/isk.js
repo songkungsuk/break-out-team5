@@ -109,9 +109,9 @@ function drawBoard() {
           ctx.drawImage(strong_block, brickX, brickY);
         }
         if (Board[i][j] === 4) {
-          Board[i][j] = 0; // Set the block state to 0 to remove it
+          Board[i][j] = 0; // 
         
-          const imageUrls = [
+          const imageUrls = [ 
             "img/item_block.png",
             "img/strong_block.png",
             "img/nobroken_block.png",
@@ -119,9 +119,9 @@ function drawBoard() {
           const randomImageUrl =
             imageUrls[Math.floor(Math.random() * imageUrls.length)];
         
-          const chooseImage = new Image();
+          const chooseImage = new Image(); // 이미지 객채 생성
         
-          chooseImage.onload = function () {
+          chooseImage.onload = function () {  // 이미지 그림
             animateItem(chooseImage, brickX, brickY);
           };
           chooseImage.src = randomImageUrl;
@@ -131,7 +131,7 @@ function drawBoard() {
         
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight;
-            if (y <= canvas.height) { 
+            if (y <= canvas.height) { // 캔버스 높이에서 떨어지면
         
               ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
               y += 5; //이미지 내려가는 속도 조절할 수 있음
