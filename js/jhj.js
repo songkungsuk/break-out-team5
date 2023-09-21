@@ -4,11 +4,12 @@ const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 
 function drawBall() {
   // 공 그리는 로직
-  ctx.beginPath(); // 선 그림
-  ctx.arc(x, y, ballSize, 0, Math.PI * 2); // 곡선을 그려 공을 만들어냄.
-  ctx.fillStyle = "green";
-  ctx.fill();
-  ctx.closePath();
+  ctx.drawImage(ballImage, x-5, y-5);
+  // ctx.beginPath(); // 선 그림
+  // ctx.arc(x, y, ballSize, 0, Math.PI * 2); // 곡선을 그려 공을 만들어냄.
+  // ctx.fillStyle = "green";
+  // ctx.fill();
+  // ctx.closePath();
 }
 
 function drawMoveBall() {

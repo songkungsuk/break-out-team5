@@ -13,10 +13,10 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j % 3 == 0) {
-      Board[i][j] = 1;
+    if (i === 0 || i === rows) {
+      Board[i][j] = 0;
     } else {
-      Board[i][j] = 2;
+      Board[i][j] = 1;
     }
   } //보드의 각 행을 초기화하는 반복문
 }
@@ -51,45 +51,18 @@ function drawBoard() {
           // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize;
-          console.log('충돌지점 x' + collisionX);
-          console.log('충돌지점 y' + collisionY);
-          console.log('블럭 좌표 x' + brickX);
-          console.log('x좌표' + x);
-          console.log('블럭 좌표 y' + brickY);
-          console.log('y좌표' + y);
+          const collisionY = y + ballSize / 2;
 
           // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
           const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
           const blockY = brickY + block_height;
 
-          // // 왼쪽 오른쪽에서 충돌한 경우
-          // if (collisionY < blockY) {
-          //   dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
-          // } 
-          // if (collisionY < brickY) {
-          //   // 아래에서 충돌한 경우
-          //   dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
-          // }
-
-          // // 위 아래 에서 충돌한 경우
-          // if (collisionX < brickX) {
-          //   dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
-          // } else if (collisionX < blockX) {
-          //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
-          // }
-          // x,y 좌표를 기준으로 블럭이 처음들어갔을때
-          if (x >= brickX && brickY <= y) {
+          // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
+          if (collisionX >= brickX-1 && collisionX <= blockX-1 || brickY < collisionY || brickY > collisionY) {
             dy = -dy;
           }
-          else if (collisionX >= blockX && brickY >= y) {
-            dy = -dy;
-          }
-
-          if (collisionY >= brickY && collisionY <= blockY && brickX >= x) {
-            dx = -dx;
-          }
-          else if (collisionY >= brickY && collisionY <= blockY && brickX - block_width <= x) {
+          // 공의 중심좌표가 블럭의 좌측과 오른쪽에 있을때
+          if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
             dx = -dx;
           }
         }
