@@ -139,9 +139,9 @@ function drawBoard() {
             if (y => paddleY) {
               // 이미지를 아래로 이동시키기
               y += 5; // 이미지를 아래로 내리는 속도 및 값 조절 가능
-              ctx.clearRect(x, y-20 , chooseImage.width, chooseImage.height-20 ); // 기존 이미지를 지우기
+              ctx.clearRect(x, y +2 , chooseImage.width, chooseImage.height + 2); // 기존 이미지를 지우기
               ctx.drawImage(chooseImage, x, y); // 이동된 위치에 이미지 다시 그리기
-              if (y > paddleXPosition - chooseImage.width) {
+              if (y > paddleXPosition - chooseImage.width && y > paddleY - chooseImage.width) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
               } else {
                 // 다음 프레임에서 반복 실행
