@@ -94,15 +94,20 @@ function drawBoard() {
 
           function animateItem(image, x, y) {
             const paddleY = canvas.height - paddleHeight; // 패들의 y 좌표
-            if (y < paddleY) {
+            if (y <= paddleY) {
               // 이미지를 아래로 이동시키기
-              y += 2; // 이미지를 아래로 내리는 속도 및 값 조절 가능
+              y += 5; // 이미지를 아래로 내리는 속도 및 값 조절 가능
               ctx.clearRect(x, y - 2, image.width, image.height + 2); // 기존 이미지를 지우기
               ctx.drawImage(image, x, y); // 이동된 위치에 이미지 다시 그리기
-              requestAnimationFrame(() => animateItem(image, x, y)); // 프레임 반복해서 이미지 그리기.
+              if (y > paddleXPosition - image.width) {
+                scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
+              } else {
+                // 다음 프레임에서 반복 실행
+                requestAnimationFrame(() => animateItem(image, x, y));
             }
           }
         }
+      }
 
         if (Board[i][j] === 5) {
           ctx.drawImage(itemImage, brickX, brickY);
