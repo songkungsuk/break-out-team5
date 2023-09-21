@@ -1,7 +1,7 @@
 const mainCanvas = document.querySelector('#main');
 const mainContext = mainCanvas.getContext("2d");
 mainCanvas.width = 720;
-const blockWidth = 60;
+const blockWidth = 87;
 const blockHeight = 20;
 const blockSpace = 5;
 const widthBlockCount = 11;
@@ -10,7 +10,7 @@ const heightBlockCount = 5;
 mainContext.fillStyle = "#98DFFF"
 
 const img = new Image();
-img.src = '../img/1.png';
+img.src = '../img/nomal_block.png';
 
 
 img.onload = function () {
