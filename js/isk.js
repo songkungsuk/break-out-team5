@@ -33,7 +33,6 @@ function drawBoard() {
         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
 
-
         // 충돌 감지 및 블록 그리기
         // 공이 그려지는좌표가 블럭안으로 들어간경우
         if (
@@ -45,28 +44,29 @@ function drawBoard() {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
           Board[i][j] -= 1;
 
-          if (Board[i][j] === 0) {                                                       // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
-            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10;            // 수정하셔도 됩니다  
+          if (Board[i][j] === 0) {
+            // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
+            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10; // 수정하셔도 됩니다
           }
           // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
           const collisionY = y + ballSize;
-          console.log('충돌지점 x' + collisionX);
-          console.log('충돌지점 y' + collisionY);
-          console.log('블럭 좌표 x' + brickX);
-          console.log('x좌표' + x);
-          console.log('블럭 좌표 y' + brickY);
-          console.log('y좌표' + y);
+          console.log("충돌지점 x" + collisionX);
+          console.log("충돌지점 y" + collisionY);
+          console.log("블럭 좌표 x" + brickX);
+          console.log("x좌표" + x);
+          console.log("블럭 좌표 y" + brickY);
+          console.log("y좌표" + y);
 
-          // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
+          // 블록의 오른쪽끝 아래쪽끝 좌표 계산
           const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
           const blockY = brickY + block_height;
 
           // // 왼쪽 오른쪽에서 충돌한 경우
           // if (collisionY < blockY) {
           //   dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
-          // } 
+          // }
           // if (collisionY < brickY) {
           //   // 아래에서 충돌한 경우
           //   dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
@@ -74,22 +74,24 @@ function drawBoard() {
 
           // // 위 아래 에서 충돌한 경우
           // if (collisionX < brickX) {
-          //   dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
+          //   dy = -dy; // 위에서 충돌한 경우 y 방향 변경
           // } else if (collisionX < blockX) {
           //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
           // }
           // x,y 좌표를 기준으로 블럭이 처음들어갔을때
           if (x >= brickX && brickY <= y) {
             dy = -dy;
-          }
-          else if (collisionX >= blockX && brickY >= y) {
+          } else if (collisionX >= blockX && brickY >= y) {
             dy = -dy;
           }
 
           if (collisionY >= brickY && collisionY <= blockY && brickX >= x) {
             dx = -dx;
-          }
-          else if (collisionY >= brickY && collisionY <= blockY && brickX - block_width <= x) {
+          } else if (
+            collisionY >= brickY &&
+            collisionY <= blockY &&
+            brickX - block_width <= x
+          ) {
             dx = -dx;
           }
         }
@@ -114,11 +116,12 @@ function drawBoard() {
 
           // 이미지 3개 배열에 저장
           const imageUrls = [
-            'img/item_block.png',
-            'img/strong_block.png',
-            'img/nobroken_block.png'
+            "img/item_block.png",
+            "img/strong_block.png",
+            "img/nobroken_block.png",
           ];
-          const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)]; // imageUrls길이 만큼 출력
+          const randomImageUrl =
+            imageUrls[Math.floor(Math.random() * imageUrls.length)]; // imageUrls길이 만큼 출력
 
           // 이미지 객체를 생성합니다.
           const chooseImage = new Image();
@@ -130,18 +133,30 @@ function drawBoard() {
           };
           chooseImage.src = randomImageUrl;
 
-
           let itemX = brickX; // 이미지를 그릴 x 좌표
           let itemY = brickY; // 이미지를 그릴 y 좌표
 
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight; // 패들의 y 좌표
-            if (y => paddleY) {
+            if (y + paddleY > canvas.height) {
+              ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
+
+              // 블록이 이제 지워짐
+            }
+            if ((y) => paddleY) {
               // 이미지를 아래로 이동시키기
               y += 5; // 이미지를 아래로 내리는 속도 및 값 조절 가능
-              ctx.clearRect(x, y +2 , chooseImage.width, chooseImage.height + 2); // 기존 이미지를 지우기
+              ctx.clearRect(
+                x,
+                y + 2,
+                chooseImage.width,
+                chooseImage.height + 2
+              ); // 기존 이미지를 지우기
               ctx.drawImage(chooseImage, x, y); // 이동된 위치에 이미지 다시 그리기
-              if (y > paddleXPosition - chooseImage.width && y > paddleY - chooseImage.width) {
+              if (
+                y > paddleXPosition - chooseImage.width &&
+                y > paddleY - chooseImage.width
+              ) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
               } else {
                 // 다음 프레임에서 반복 실행
