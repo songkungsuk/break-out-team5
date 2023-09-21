@@ -13,10 +13,10 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (i === 0 || i === rows) {
-      Board[i][j] = 0;
-    } else {
+    if (j % 3 == 0) {
       Board[i][j] = 1;
+    } else {
+      Board[i][j] = 2;
     }
   } //보드의 각 행을 초기화하는 반복문
 }
@@ -51,18 +51,45 @@ function drawBoard() {
           // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize / 2;
+          const collisionY = y + ballSize;
+          console.log('충돌지점 x' + collisionX);
+          console.log('충돌지점 y' + collisionY);
+          console.log('블럭 좌표 x' + brickX);
+          console.log('x좌표' + x);
+          console.log('블럭 좌표 y' + brickY);
+          console.log('y좌표' + y);
 
           // 블록의 오른쪽끝 아래쪽끝 좌표 계산 
           const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
           const blockY = brickY + block_height;
 
-          // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
-          if (collisionX >= brickX-1 && collisionX <= blockX-1 || brickY < collisionY || brickY > collisionY) {
+          // // 왼쪽 오른쪽에서 충돌한 경우
+          // if (collisionY < blockY) {
+          //   dx = -dx; // 오른쪽에서 충돌한 경우 x 방향 변경
+          // } 
+          // if (collisionY < brickY) {
+          //   // 아래에서 충돌한 경우
+          //   dx = -dx; // 왼쪽에서 충돌한 경우 x 방향 변경
+          // }
+
+          // // 위 아래 에서 충돌한 경우
+          // if (collisionX < brickX) {
+          //   dy = -dy; // 위에서 충돌한 경우 y 방향 변경 
+          // } else if (collisionX < blockX) {
+          //   dy = -dy; // 아래에서 충돌한 경우 y 방향 변경
+          // }
+          // x,y 좌표를 기준으로 블럭이 처음들어갔을때
+          if (x >= brickX && brickY <= y) {
             dy = -dy;
           }
-          // 공의 중심좌표가 블럭의 좌측과 오른쪽에 있을때
-          if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
+          else if (collisionX >= blockX && brickY >= y) {
+            dy = -dy;
+          }
+
+          if (collisionY >= brickY && collisionY <= blockY && brickX >= x) {
+            dx = -dx;
+          }
+          else if (collisionY >= brickY && collisionY <= blockY && brickX - block_width <= x) {
             dx = -dx;
           }
         }
@@ -81,33 +108,48 @@ function drawBoard() {
         }
         if (Board[i][j] === 4) {
           Board[i][j] = 0; // 블럭을 그리지 않음
-          const itemImage = new Image(); // 새 이미지 객체 생성
-          itemImage.src = "img/item_block.png"; // 아이템 이미지 파일 경로 설정
+
+          //const itemImage = new Image(); // 새 이미지 객체 생성
+          //itemImage.src = "img/item_block.png"; // 아이템 이미지 파일 경로 설정
+
+          // 이미지 3개 배열에 저장
+          const imageUrls = [
+            'img/item_block.png',
+            'img/strong_block.png',
+            'img/nobroken_block.png'
+          ];
+          const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)]; // imageUrls길이 만큼 출력
+
+          // 이미지 객체를 생성합니다.
+          const chooseImage = new Image();
+
+          // 이미지가 로드되었을 때 실행되는 콜백 함수를 설정합니다.
+          chooseImage.onload = function () {
+            // 이미지가 성공적으로 로드되면 그리기 작업을 수행합니다.
+            animateItem(chooseImage, itemX, itemY);
+          };
+          chooseImage.src = randomImageUrl;
+
+
           let itemX = brickX; // 이미지를 그릴 x 좌표
           let itemY = brickY; // 이미지를 그릴 y 좌표
 
-          // 이미지가 로드되었을 때 실행되는 콜백 함수
-          itemImage.onload = function () {
-            // 이미지가 성공적으로 로드되면 그리기 작업을 수행합니다.
-            animateItem(itemImage, itemX, itemY);
-          };
-
-          function animateItem(image, x, y) {
+          function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight; // 패들의 y 좌표
-            if (y <= paddleY) {
+            if (y => paddleY) {
               // 이미지를 아래로 이동시키기
               y += 5; // 이미지를 아래로 내리는 속도 및 값 조절 가능
-              ctx.clearRect(x, y - 2, image.width, image.height + 2); // 기존 이미지를 지우기
-              ctx.drawImage(image, x, y); // 이동된 위치에 이미지 다시 그리기
-              if (y > paddleXPosition - image.width) {
+              ctx.clearRect(x, y-20 , chooseImage.width, chooseImage.height-20 ); // 기존 이미지를 지우기
+              ctx.drawImage(chooseImage, x, y); // 이동된 위치에 이미지 다시 그리기
+              if (y > paddleXPosition - chooseImage.width) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
               } else {
                 // 다음 프레임에서 반복 실행
-                requestAnimationFrame(() => animateItem(image, x, y));
+                requestAnimationFrame(() => animateItem(chooseImage, x, y));
+              }
             }
           }
         }
-      }
 
         if (Board[i][j] === 5) {
           ctx.drawImage(itemImage, brickX, brickY);
