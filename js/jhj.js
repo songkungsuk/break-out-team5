@@ -1,10 +1,10 @@
 let dx = 0; // x축 방향으로 움직이는 속도 초기화한 값
-let dy = -4; // y축 방향으로 움직이는 속도 초기화한 값.
+let dy = 0; // y축 방향으로 움직이는 속도 초기화한 값.
 const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 
 function drawBall() {
   // 공 그리는 로직
-  ctx.drawImage(ballImage, x-5, y-5);
+  ctx.drawImage(ballImage, x-5, y);
   // ctx.beginPath(); // 선 그림
   // ctx.arc(x, y, ballSize, 0, Math.PI * 2); // 곡선을 그려 공을 만들어냄.
   // ctx.fillStyle = "green";
@@ -75,9 +75,13 @@ function drawMoveBall() {
     } else {
       document.querySelector('#lives').innerText = life;
       // alert('목숨 감소');
-      clearInterval(interval)
+      clearInterval(interval);
       isStarted = false;  // rsh.js에 마우스무브 이벤트에 있는 if(!isStarted) 때문에 적어놓음
-      y = canvas.height - 120;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
+      dy=0;
+      y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
+      x = paddleXPosition + paddleWidth/2;
+      drawPaddle(); // 공받아치는 판
+      drawBall(); //공 그리기
     }
     dy = -dy;
   }
