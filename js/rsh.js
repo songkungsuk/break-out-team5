@@ -7,11 +7,12 @@ let paddleXPosition = (canvas.width - paddleWidth) / 2;     // 공 받이의 x�
 
 // 공 받이 그리는 함수
 function drawPaddle() {
-    ctx.beginPath();
-    ctx.rect(paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);      // 여기서 100은 그냥 패달 조금 위에 있게 하려고 넣은거임
-    ctx.fillStyle = "#00FF00";
-    ctx.fill();
-    ctx.closePath();    
+    ctx.drawImage(paddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+    // ctx.beginPath();
+    // ctx.rect(paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);      // 여기서 100은 그냥 패달 조금 위에 있게 하려고 넣은거임
+    // ctx.fillStyle = "#00FF00";
+    // ctx.fill();
+    // ctx.closePath();    
 }
 
 
