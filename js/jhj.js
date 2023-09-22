@@ -61,7 +61,12 @@ function drawMoveBall() {
   if (y + dy > canvas.height) {
     // 바닥에 닿으면 게임 종료 후 새로고침
     --life;
-    
+    life_html = '';
+    for (let i = 0; i < life; i++) {
+      life_html += '<img src="/img/ball2.png" alt="공"></img>';
+    }
+    document.querySelector('#lives').innerHTML = life_html;
+
     if (life === 0) {
       alert("게임 종료ㅋㅋ") //ㅋㅋ
       clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
