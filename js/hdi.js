@@ -8,6 +8,8 @@ let isStarted = false;
 let interval;
 let life = 3;
 let life_html = '';
+let isBallfloor = false;
+
 
 const strong_block = new Image();
 strong_block.src = "../img/strong_block.png";

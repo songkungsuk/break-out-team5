@@ -3,11 +3,66 @@ const cols = 12; //열 개수
 
 const block_width = 87; //블럭 가로길이
 const block_height = 20; // 블럭 세로길이
-let scoreTitle = document.querySelector("#score"); // 
-const Board = [];
-let stage = 1;
-//---------------------------------------변수 선언은 위에다 하는게좋아요.. 그때그때 생성해버리면 보기 어지러워요..-----------------------------
+let scoreTitle = document.querySelector("#score"); // 스코어 html 
+const Board = []; //배열 초기화
+let stage = 1; //스테이지 번호
 
+const imageUrls = [
+  // "img/item1.png",
+  // "img/item2.png",
+  "img/item3.png",
+  // "img/item4.png"
+];
+
+let randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+const chooseImage = new Image(); // 이미지 객채 생성
+
+//---------------------------------------변수 선언은 위에다 하는게좋아요.. 그때그때 생성해버리면 보기 어지러워요..-----------------------------
+//-------------------------------------------------------------함수---------------------------------------------------
+
+
+// 8초후에 패들길이가 원래대로 돌아오게하는것
+function longPaddleItemTimeOut(){
+  setTimeout(function(){
+    paddleWidth = 150;
+  },8000);
+}
+
+// 아이템 그리는 함수
+function animateItem(chooseImage, x, y, Url=randomImageUrl) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
+  //이거 계산이 패들 세로길이 + 패들위치 이렇게하면되요
+  const paddleY = canvas.height - paddleHeight -100; 
+  if (y <= canvas.height) {
+    ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
+  }
+
+  // 캔버스 높이에서 떨어지면
+  y += 5; //이미지 내려가는 속도 조절할 수 있음
+  ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 위치
+  if (
+    x < paddleXPosition + paddleWidth &&
+    x + chooseImage.width > paddleXPosition &&
+    y + chooseImage.height >= paddleY && // 아이템을 먹었을때 이미지 사라지는거 수정
+    y < paddleY + paddleHeight
+  ) {
+    scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
+    ctx.clearRect(x, y - 5, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
+    if (Url == 'img/item3.png') {
+      paddleWidth = 200;
+      longPaddleItemTimeOut();
+    }
+  } else if(!isBallfloor){
+    requestAnimationFrame(() => animateItem(chooseImage, x, y + 1)); // 나는 화살표함수모르는데..
+  } else{
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //그린거 다시 그리기위해 전체 백지화
+    drawPaddle(); // 공받아치는 판
+    drawMoveBall(); //공 그리기
+    drawBoard(); //벽돌그리기
+  }
+  // 프레임 활용해서 다시 그림
+
+}
+//---------------------------------------------------------------------------
 
 // for (let i = 0; i < rows; i++) {
 //   Board[i] = [];
@@ -41,8 +96,8 @@ function drawBoard() {
           y <= brickY + block_height
         ) {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
-          Board[i][j] -= 1; 
-
+          Board[i][j] -= 1;
+          player.play(attack_block);
           // // 블럭 한개 부딪히면 다 없어지게 하고 안 깨지는 블록만 남는 코드인데 그냥 다음 스테이지로 넘어가는거 실험하려고 넣은거임
           // for (let i = 0; i < Board.length; i++) {
           //   for (let j = 0; j < Board[i].length; j++) {
@@ -59,8 +114,8 @@ function drawBoard() {
 
           if (Board.every(function (board) {  // 보드 배열 전체가 펑션을 만족하면 true를 리턴해서 다음스테이지로 넘어가는건데..너무 복잡하게 생각했나? 네
             // 위 펑션에서 받은 board는 보드 배열 안의 배열을 말하는거임, Board가 Board[i]라면 board는 Board[i][j] 같은 느낌
-            for(let i=0; i<board.length; i++) {
-              if(board[i] == 0 || board[i] == 9 || board[i] == 10) {  // 보드 배열 안의 배열이 0(부서져서 없는 블록)이거나 9(안깨지는 블록)이거나 10(안깨지는 블록)이면 true 리턴, 안깨지는 블록이 왜 2개인지는 모르겠음
+            for (let i = 0; i < board.length; i++) {
+              if (board[i] == 0 || board[i] == 9 || board[i] == 10) {  // 보드 배열 안의 배열이 0(부서져서 없는 블록)이거나 9(안깨지는 블록)이거나 10(안깨지는 블록)이면 true 리턴, 안깨지는 블록이 왜 2개인지는 모르겠음 -> 블록배열의 번호가10일때 부딫히면 9가되는데 9일때도 다시 그려줘야됨 안그러면 안깨지는 블록이 사라지는것이 연출됨 
                 return true;
               }
             } // 그래서 결국에는 Board.every(~)도 true임
@@ -76,10 +131,10 @@ function drawBoard() {
             drawBall(); //공 그리기
             drawBoard(); // 블럭그리기
             if (stage == 2) {
-              dx=0;
+              dx = 0;
               drawStage2();
             } else if (stage == 3) {
-              dx=0;
+              dx = 0;
               drawStage3();
 
             } else {
@@ -103,19 +158,14 @@ function drawBoard() {
           const blockY = brickY + block_height;
 
           // x,y 좌표를 기준으로 블럭이 처음들어갔을때
-          if (x >= brickX && brickY <= y) {
-            dy = -dy;
-          } else if (collisionX >= blockX && brickY >= y) {
+
+          // 이거좀바꾸지마셈
+          // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
+          if (collisionX >= brickX-1 && collisionX <= blockX-1 || brickY < collisionY || brickY >= collisionY) {
             dy = -dy;
           }
 
-          if (collisionY >= brickY && collisionY <= blockY && brickX >= x) {
-            dx = -dx;
-          } else if (
-            collisionY >= brickY &&
-            collisionY <= blockY &&
-            brickX - block_width <= x
-          ) {
+          if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
             dx = -dx;
           }
         }
@@ -134,65 +184,9 @@ function drawBoard() {
         }
         if (Board[i][j] === 4) {
           Board[i][j] = 0; // 
-        
-          const imageUrls = [ 
-            "img/item1.png",
-            "img/item2.png",
-            "img/item3.png",
-            "img/item4.png"
-          ];
-          const randomImageUrl =
-            imageUrls[Math.floor(Math.random() * imageUrls.length)];
-
-          const chooseImage = new Image(); // 이미지 객채 생성
-          chooseImage.onload = function () {  // 이미지 그림
-            animateItem(chooseImage, brickX, brickY);
-          };
+          randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
           chooseImage.src = randomImageUrl;
-          
-          //ㅇㅅㅇ..함수는 따로 빼놓아도 될거같은디 ㅇㅅㅇ 위에다 빼죠
-          function animateItem(chooseImage, x, y) {
-            const paddleY = canvas.height - paddleHeight;
-            if(y <= canvas.height){
-                ctx.clearRect(x,y, chooseImage.width, chooseImage.height);
-            }
-            
-             // 캔버스 높이에서 떨어지면
-
-              y += 5; //이미지 내려가는 속도 조절할 수 있음
-              ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 
-               if (
-                x < paddleXPosition + paddleWidth &&
-                x + chooseImage.width > paddleXPosition &&
-                y + chooseImage.height >= paddleY - 50 && // 아이템을 먹었을때 이미지 사라지는거 수정
-                y < paddleY + paddleHeight
-              ) {
-                scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
-                ctx.clearRect(x, y-5, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
-                if (randomImageUrl == 'img/item3.png') {
-                  paddleWidth = 200;
-                  // let longPaddleTime = 5;
-                  // const longPaddleItemInterval = setInterval(function() {
-                  //   --longPaddleTime;
-                  // }, 1000);
-                  // if(longPaddleTime === 0) {
-                  //   clearInterval(longPaddleItemInterval);
-                  //   paddleWidth = 150;
-                  // }
-                  // ctx.drawImage(longPaddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
-                  longPaddleItemTimeOut = setTimeout(function () {
-                    paddleWidth = 150;
-                  }, 5000);
-                }
-                if (randomImageUrl == 'img/item3.png') {
-                  clearTimeout(longPaddleItemTimeOut);
-                }
-              } else {
-                requestAnimationFrame(() => animateItem(chooseImage, x, y+1));
-              }
-              // 프레임 활용해서 다시 그림
-
-          }
+          animateItem(chooseImage, brickX, brickY, randomImageUrl);
         }
         if (Board[i][j] === 5) {
           ctx.drawImage(itemImage, brickX, brickY);
@@ -209,3 +203,4 @@ function drawBoard() {
     }
   }
 }
+

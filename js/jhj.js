@@ -60,27 +60,29 @@ function drawMoveBall() {
   }
   if (y + dy > canvas.height) {
     // 바닥에 닿으면 게임 종료 후 새로고침
-    --life;
-    life_html = '';
+    isBallfloor = true; //공이 떨어졌다.
+    --life; // 목숨감소
+    life_html = ''; //새로써야겠지?
     for (let i = 0; i < life; i++) {
       life_html += '<img src="/img/ball2.png" alt="공"></img>';
     }
-    document.querySelector('#lives').innerHTML = life_html;
+    document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
 
-    if (life === 0) {
+    if (life === 0) { //목숨이 없어지면?
       alert("게임 종료ㅋㅋ") //ㅋㅋ
       clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
       document.location.reload();
     } else {
-      document.querySelector('#lives').innerHTML = life_html;
-      // alert('목숨 감소');
       clearInterval(interval);
+      document.querySelector('#lives').innerHTML = life_html;
       isStarted = false;  // rsh.js에 마우스무브 이벤트에 있는 if(!isStarted) 때문에 적어놓음
       dy = 0;
       y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
-      x = paddleXPosition + paddleWidth / 2;
+      x = paddleXPosition + paddleWidth / 2; //공위치 초기화
       drawPaddle(); // 공받아치는 판
       drawBall(); //공 그리기
+      
+      
     }
     dy = -dy;
   }
