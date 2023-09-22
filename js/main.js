@@ -6,10 +6,10 @@ window.addEventListener('load', function () {
     // Board[4][5] = 10;
     // Board[4][10] = 10;
     // Board[2][2] = 10;
-    Board[7][10] = 5;
-    Board[3][6] = 2;
-    Board[2][1] = 2;
-    Board[1][6] = 2;
+    // Board[7][10] = 5;
+    // Board[3][6] = 2;
+    // Board[2][1] = 2;
+    // Board[1][6] = 2;
 
 
     dy = 0;

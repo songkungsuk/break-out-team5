@@ -1,4 +1,4 @@
-const rows = 8; //행 개수
+const rows = 10; //행 개수
 const cols = 12; //열 개수
 
 const block_width = 87; //블럭 가로길이
@@ -6,11 +6,11 @@ const block_height = 20; // 블럭 세로길이
 let scoreTitle = document.querySelector("#score"); // 스코어 html 
 const Board = []; //배열 초기화
 let stage = 1; //스테이지 번호
-
+let remains = 0; // 남아있는 블럭 체크용 변수
 const imageUrls = [
   // "img/item1.png",
-  // "img/item2.png",
-  "img/item3.png",
+  "img/item2.png",
+  // "img/item3.png",
   // "img/item4.png"
 ];
 
@@ -18,20 +18,27 @@ let randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
 const chooseImage = new Image(); // 이미지 객채 생성
 
 //---------------------------------------변수 선언은 위에다 하는게좋아요.. 그때그때 생성해버리면 보기 어지러워요..-----------------------------
-//-------------------------------------------------------------함수---------------------------------------------------
+//-------------------------------------------------------------함수---------어차피 윈도우 로드이벤트라 그냥 순서막놔도됨 function먼저 읽으니까!------------------------------------------
 
 
 // 8초후에 패들길이가 원래대로 돌아오게하는것
-function longPaddleItemTimeOut(){
-  setTimeout(function(){
+function longPaddleItemTimeOut() {
+  setTimeout(function () {
     paddleWidth = 150;
-  },8000);
+  }, 8000);
+}
+
+// 5초후에 블럭 마구잡이로 부수는거 원래대로 돌아오게함
+function PowerballItemTimeOut() {
+  setTimeout(function () {
+    isGetItem2 = false;
+  }, 10000);
 }
 
 // 아이템 그리는 함수
-function animateItem(chooseImage, x, y, Url=randomImageUrl) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
+function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
   //이거 계산이 패들 세로길이 + 패들위치 이렇게하면되요
-  const paddleY = canvas.height - paddleHeight -100; 
+  const paddleY = canvas.height - paddleHeight - 100;
   if (y <= canvas.height) {
     ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
   }
@@ -47,13 +54,29 @@ function animateItem(chooseImage, x, y, Url=randomImageUrl) { //이거 매개변
   ) {
     scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
     ctx.clearRect(x, y - 5, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
-    if (Url == 'img/item3.png') {
+
+
+    //먹은 아이템에 대해서
+    if (Url == 'img/item1.png') {
+      life++; // 목숨증가
+      life_html = ''; //새로써야겠지?
+      for (let i = 0; i < life; i++) {
+        life_html += '<img src="/img/ball2.png" alt="공"></img>';
+      }
+      document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
+    } else if (Url == 'img/item2.png') {
+      isGetItem2 = true;
+      PowerballItemTimeOut();
+    } else if (Url == 'img/item3.png') {
       paddleWidth = 200;
       longPaddleItemTimeOut();
+    } else if (Url == 'img/item4.png') {
+      //접착되게 하는 로직 넣기 그리고 몇초후에는 풀려야겠지 ? 힌트를주면 마치 x의 위치를 패들과 접착한상태로 유지한채로 공을 그려야겠죠 ? ...........여기까지..
+
     }
-  } else if(!isBallfloor){
+  } else if (!isBallfloor) { //공안떨어졌으면 이르케그림
     requestAnimationFrame(() => animateItem(chooseImage, x, y + 1)); // 나는 화살표함수모르는데..
-  } else{
+  } else { //떨어지면 아이템없에버림 어디떨어진지 모르니까 걍 전체 백지화시킴..
     ctx.clearRect(0, 0, canvas.width, canvas.height); //그린거 다시 그리기위해 전체 백지화
     drawPaddle(); // 공받아치는 판
     drawMoveBall(); //공 그리기
@@ -61,6 +84,50 @@ function animateItem(chooseImage, x, y, Url=randomImageUrl) { //이거 매개변
   }
   // 프레임 활용해서 다시 그림
 
+}
+
+// 보드의 남아있는 블럭을 체크 없으면 다음스테이지
+function checkBoard() {
+
+  //전체적으로 남은블럭이있는지 둘러본다
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (Board[i][j] == 1 || Board[i][j] == 2 || Board[i][j] == 5) {
+        remains++;
+      }
+    }
+  }
+  //남은놈이 없으면 스테이지 증가
+  if (remains === 0) {
+    stage++;
+    nextStage();
+  }
+  //다시체크하기위해 변수 0으로 초기화
+  remains = 0;
+}
+
+//다음스테이지
+function nextStage() {
+  isStarted = false;
+  dy = 0;
+  y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
+  x = paddleXPosition + paddleWidth / 2;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawPaddle(); // 공받아치는 판
+  drawBall(); //공 그리기
+  drawBoard(); // 블럭그리기
+  if (stage == 2) {
+    dx = 0;
+    drawStage2();
+  } else if (stage == 3) {
+    dx = 0;
+    drawStage3();
+
+  } else if (stage > 3) {
+    // 게임 클리어하는 부분인데 일단 임시로 이렇게 해 놓았음
+    alert('게임 클리어');
+    document.location.reload();
+  }
 }
 //---------------------------------------------------------------------------
 
@@ -98,51 +165,8 @@ function drawBoard() {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
           Board[i][j] -= 1;
           player.play(attack_block);
-          // // 블럭 한개 부딪히면 다 없어지게 하고 안 깨지는 블록만 남는 코드인데 그냥 다음 스테이지로 넘어가는거 실험하려고 넣은거임
-          // for (let i = 0; i < Board.length; i++) {
-          //   for (let j = 0; j < Board[i].length; j++) {
-          //     Board[i][j] = 0;
-          //   }
-          // }
-          // Board[4][5] = 10;
-          // Board[4][10] = 10;
-          // Board[2][2] = 10;
-          // Board[5][10] = 5;
-          // Board[3][6] = 2;
-          // Board[2][1] = 2;
-          // Board[1][6] = 2;
-
-          if (Board.every(function (board) {  // 보드 배열 전체가 펑션을 만족하면 true를 리턴해서 다음스테이지로 넘어가는건데..너무 복잡하게 생각했나? 네
-            // 위 펑션에서 받은 board는 보드 배열 안의 배열을 말하는거임, Board가 Board[i]라면 board는 Board[i][j] 같은 느낌
-            for (let i = 0; i < board.length; i++) {
-              if (board[i] == 0 || board[i] == 9 || board[i] == 10) {  // 보드 배열 안의 배열이 0(부서져서 없는 블록)이거나 9(안깨지는 블록)이거나 10(안깨지는 블록)이면 true 리턴, 안깨지는 블록이 왜 2개인지는 모르겠음 -> 블록배열의 번호가10일때 부딫히면 9가되는데 9일때도 다시 그려줘야됨 안그러면 안깨지는 블록이 사라지는것이 연출됨 
-                return true;
-              }
-            } // 그래서 결국에는 Board.every(~)도 true임
-          })) {
-            ++stage;
-            console.log('stage = ' + stage);
-            isStarted = false;
-            dy = 0;
-            y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
-            x = paddleXPosition + paddleWidth / 2;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawPaddle(); // 공받아치는 판
-            drawBall(); //공 그리기
-            drawBoard(); // 블럭그리기
-            if (stage == 2) {
-              dx = 0;
-              drawStage2();
-            } else if (stage == 3) {
-              dx = 0;
-              drawStage3();
-
-            } else {
-              // 게임 클리어하는 부분인데 일단 임시로 이렇게 해 놓았음
-              alert('게임 클리어');
-              document.location.reload();
-            }
-          }
+          // 보드의 남아있는 블럭을 체크 없으면 다음스테이지
+          checkBoard();
 
           if (Board[i][j] === 0) {
             // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
@@ -151,7 +175,7 @@ function drawBoard() {
           // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize;
+          const collisionY = y + ballSize / 2;
 
           // 블록의 오른쪽끝 아래쪽끝 좌표 계산
           const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
@@ -161,12 +185,16 @@ function drawBoard() {
 
           // 이거좀바꾸지마셈
           // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
-          if (collisionX >= brickX-1 && collisionX <= blockX-1 || brickY < collisionY || brickY >= collisionY) {
-            dy = -dy;
+          if (!isGetItem2) {
+            if (collisionX >= brickX - 1 && collisionX <= blockX - 1 || brickY < collisionY || brickY >= collisionY) {
+              dy = -dy;
+            }
           }
-
-          if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
-            dx = -dx;
+          // 공의 중심좌표가 블럭의 왼쪽줄과 오른줄에 있을때
+          if (!isGetItem2) {
+            if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
+              dx = -dx;
+            }
           }
         }
         //-------------------------- 송경석--------------

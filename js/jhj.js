@@ -4,7 +4,12 @@ const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 
 function drawBall() {
   // 공 그리는 로직
-  ctx.drawImage(ballImage, x - 10, y, 30, 30);
+  if(isGetItem2){
+    ctx.drawImage(PowerballImage, x - 10, y, 30, 30);
+  }else{
+    ctx.drawImage(ballImage, x - 10, y, 30, 30);
+  }
+  
 }
 
 function drawMoveBall() {

@@ -9,7 +9,7 @@ let interval;
 let life = 3;
 let life_html = '';
 let isBallfloor = false;
-
+let isGetItem2 = false;
 
 const strong_block = new Image();
 strong_block.src = "../img/strong_block.png";
@@ -23,10 +23,13 @@ const paddleImage = new Image();
 paddleImage.src = "../img/paddle.png";
 const ballImage = new Image();
 ballImage.src = "../img/ball2.png";
+const PowerballImage = new Image();
+PowerballImage.src = "../img/ball4.png";
 const longPaddleImage = new Image();
 longPaddleImage.src = "../img/long_paddle.png";
-//----------------------------------------------------------------
 
+
+//----------------------------------------------------------------
 //  1단계
 function drawStage1() {
     for (let i = 0; i < rows; i++) {
@@ -42,15 +45,25 @@ function drawStage1() {
 function drawStage2() {
     for (let i = 0; i < rows; i++) {
         Board[i] = [];
-        for (let j = i + 6; j < cols; j++) {
+    }
+    for (let i = 2; i < rows; i++) {
+        
+        for (let j = i + 3; j < cols; j++) {
             Board[i][j] = 1;
         }
     }
-    for (let i = rows; i >= 0; i--) {
+    for (let i = rows; i > 1; i--) {
         for (let j = 0; j < rows - i; j++) {
             Board[i][j] = 1;
         }
     }
+    // Board[2][7] = 1;
+    // Board[1][6] = 1;
+    // Board[3][8] = 1;
+    // Board[4][9] = 1;
+    // Board[5][10] = 1;
+    // Board[6][11] = 1;
+    
 }
 
 // 3단계
