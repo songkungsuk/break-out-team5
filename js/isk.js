@@ -9,7 +9,6 @@ const block_height = 20;
 let scoreTitle = document.querySelector("#score");
 const Board = [];
 
-//stage1
 for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
@@ -128,23 +127,24 @@ function drawBoard() {
           chooseImage.src = randomImageUrl;
         
           let itemX = brickX; // 이미지 그릴 x좌표
-          let itemY = brickY; // 이미지 그릴 y좌표 -?
-        
+          let itemY = brickY; // 이미지 그릴 y좌표
+
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight;
             if (y <= canvas.height) { // 캔버스 높이에서 떨어지면
-        
               ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
               y += 5; //이미지 내려가는 속도 조절할 수 있음
-              ctx.drawImage(chooseImage, x, y);//이미지 그리는 
+              if(y + dy >canvas.height && y + chooseImage.width <= canvas.height && x + chooseImage.width <= canvas.height){  // 이거만 수정하면됨
+                ctx.clearRect(x,y, chooseImage.width, chooseImage.height);
+              }
+              ctx.drawImage(chooseImage, x+30, y);//이미지 그리는 
               if (
                 x + chooseImage.width >= paddleXPosition &&  // 이미지랑 패들이랑 충돌했을때 점수 올라감 나머지는 안됨
                 x <= paddleXPosition + paddleWidth &&
-                y + chooseImage.height >= paddleY
+                y + chooseImage.width >= paddleXPosition &&
+                y <= paddleXPosition + paddleWidth
               ) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
-                ctx.clearRect(x, y, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
-                Board[i][j] = 0;
               } else {
                 requestAnimationFrame(() => animateItem(chooseImage, x, y));
               }
