@@ -35,11 +35,18 @@ function drawStage1() {
     for (let i = 0; i < rows; i++) {
         Board[i] = [];
         for (let j = 0; j < cols; j++) {
-            if (j !== 0 && j !== 11 && i  > 1 ) {
+            if (j !== 0 && j !== 11 && i > 1) {
                 Board[i][j] = 1;
             }
         }
     }
+
+    // 안뽀개지는 블럭들 임의로 지정했어요 하드코딩 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ
+    Board[4][5] = 10;
+    Board[4][6] = 10;
+    Board[5][5] = 10;
+    Board[5][6] = 10;
+
 }
 // 2단계
 function drawStage2() {
@@ -47,7 +54,7 @@ function drawStage2() {
         Board[i] = [];
     }
     for (let i = 2; i < rows; i++) {
-        
+
         for (let j = i + 3; j < cols; j++) {
             Board[i][j] = 1;
         }
@@ -57,13 +64,6 @@ function drawStage2() {
             Board[i][j] = 1;
         }
     }
-    // Board[2][7] = 1;
-    // Board[1][6] = 1;
-    // Board[3][8] = 1;
-    // Board[4][9] = 1;
-    // Board[5][10] = 1;
-    // Board[6][11] = 1;
-    
 }
 
 // 3단계

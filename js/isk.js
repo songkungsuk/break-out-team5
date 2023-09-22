@@ -131,16 +131,10 @@ function nextStage() {
 }
 //---------------------------------------------------------------------------
 
-// for (let i = 0; i < rows; i++) {
-//   Board[i] = [];
-//   for (let j = 0; j < cols; j++) {
-//     //임시로 이렇게 초기화 했음 -경석-
-//     if (j !=  0 && j != cols-1) {
-//       Board[i][j] = 1;
-//     }
-//   } //보드의 각 행을 초기화하는 반복문
-// }
-drawStage1();
+
+
+//임의로 스테이지 추가해서 확인중인것 이거바꾸면 블럭 전체 모양바뀜 ㅇㅇ
+drawStage3();
 
 /*
 정해준이 수정함
@@ -185,13 +179,13 @@ function drawBoard() {
 
           // 이거좀바꾸지마셈
           // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
-          if (!isGetItem2) {
+          if (!isGetItem2 || Board[i][j] >=9) {
             if (collisionX >= brickX - 1 && collisionX <= blockX - 1 || brickY < collisionY || brickY >= collisionY) {
               dy = -dy;
             }
           }
           // 공의 중심좌표가 블럭의 왼쪽줄과 오른줄에 있을때
-          if (!isGetItem2) {
+          if (!isGetItem2 || Board[i][j] >=9) {
             if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
               dx = -dx;
             }
