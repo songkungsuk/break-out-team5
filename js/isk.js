@@ -13,12 +13,13 @@ for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j !=  0 && j != cols-1) {
+    if (j % 3 == 0) {
       Board[i][j] = 1;
+    } else {
+      Board[i][j] = 2;
     }
   } //보드의 각 행을 초기화하는 반복문
 }
-
 
 /*
 정해준이 수정함
@@ -114,7 +115,7 @@ function drawBoard() {
             "img/item1.png",
             "img/item2.png",
             "img/item3.png",
-            "img/item4.png"
+            "img/item3.png"
           ];
           const randomImageUrl =
             imageUrls[Math.floor(Math.random() * imageUrls.length)];
@@ -128,23 +129,23 @@ function drawBoard() {
         
           let itemX = brickX; // 이미지 그릴 x좌표
           let itemY = brickY; // 이미지 그릴 y좌표
-
+        
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight;
             if (y <= canvas.height) { // 캔버스 높이에서 떨어지면
+        
               ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
               y += 5; //이미지 내려가는 속도 조절할 수 있음
-              if(y + dy >canvas.height && y + chooseImage.width <= canvas.height && x + chooseImage.width <= canvas.height){  // 이거만 수정하면됨
-                ctx.clearRect(x,y, chooseImage.width, chooseImage.height);
-              }
-              ctx.drawImage(chooseImage, x+30, y);//이미지 그리는 
+              ctx.drawImage(chooseImage, x+(block_width/2), y);//이미지 그리는 
               if (
                 x + chooseImage.width >= paddleXPosition &&  // 이미지랑 패들이랑 충돌했을때 점수 올라감 나머지는 안됨
                 x <= paddleXPosition + paddleWidth &&
-                y + chooseImage.width >= paddleXPosition &&
+                y + chooseImage.height >= paddleY &&
                 y <= paddleXPosition + paddleWidth
+
               ) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
+                ctx.clearRect(x, y, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
               } else {
                 requestAnimationFrame(() => animateItem(chooseImage, x, y));
               }
