@@ -18,14 +18,7 @@ const ballImage = new Image();
 ballImage.src = "../img/ball2.png";
 //----------------------------------------------------------------
 
-// Score 변수
-let score = 0;//var ->let로 변경
-const scoreElement = document.querySelector("#score");
 
-// lives 변수
-let lives = 0; //var ->let로 변경
-
-const livesElement = document.querySelector("#lives");
 
 // 기존 js에서 헤더를 초기값으로 변경할 수 있도록 함 
 scoreElement.textContent = score;

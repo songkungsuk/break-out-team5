@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/css/front.css">
+    <link rel="stylesheet" href="/css/front.css" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="container">
-
-        <div class="header">
-            <p>Score: <span id="score">0</span></p>
-            <p>Lives: <span id="lives">0</span></p>
-        </div>
-        <!-- 클릭하기 전에 '클릭하면 시작한다'고 알려주려고 임시로 만든거임 -->
-        <span id="startMsg" style="font-size: xx-large; font-weight: bolder;">클릭하면 시작함 ㅋㅋ</span>
-        <canvas id="gameCanvas" width="1080px" height="900px">
-        </canvas>
+      <div class="header">
+        <p>Score: <span id="score">0</span></p>
+        <p>LIFE: <span id="lives"></span></p>
+      </div>
+      <!-- 클릭하기 전에 '클릭하면 시작한다'고 알려주려고 임시로 만든거임 -->
+      <span id="startMsg" style="font-size: xx-large; font-weight: bolder"
+        >클릭하면 시작함 ㅋㅋ</span
+      >
+      <canvas id="gameCanvas" width="1080px" height="900px"> </canvas>
     </div>
 
     <script src="/js/hdi.js"></script>
-    <script src="/js/jhj.js"></script> <!-- 스크립트 순서에 따라 오류가 나서 jhj.js파일을 위에 올려두었습니다.-->
+    <script src="/js/jhj.js"></script>
+    <!-- 스크립트 순서에 따라 오류가 나서 jhj.js파일을 위에 올려두었습니다.-->
     <script src="/js/isk.js"></script>
     <script src="/js/rsh.js"></script>
     <!-- <script src="/js/sks.js"></script> -->
     <script src="/js/main.js"></script>
-</body>
-
+  </body>
 </html>
