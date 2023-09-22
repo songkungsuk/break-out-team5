@@ -43,6 +43,40 @@ function drawBoard() {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
           Board[i][j] -= 1;
 
+           // 블럭 한개 부딪히면 다 없어지게 하는 코드인데 그냥 다음 스테이지로 넘어가는거 실험하려고 넣은거임
+          // for(let i=0; i<Board.length; i++) {
+          //   for(let j=0; j<Board[i].length; j++) {
+          //     Board[i][j] = 0;
+          //   }
+          // }
+          
+          if(Board.every(function (board) {
+            if(board.every(function (value) {
+              return value == 0 || value == 9 || value == 10;
+            })) {
+              return true;
+            } 
+          })) {
+            ++stage;
+            console.log('stage = ' + stage);
+            isStarted = false;
+            dy = 0;
+            y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
+            x = paddleXPosition + paddleWidth / 2;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPaddle(); // 공받아치는 판
+            drawBall(); //공 그리기
+            drawBoard();
+            if(stage == 2) {
+              drawStage2();
+            } else if(stage == 3) {
+              drawStage3();
+            } else {
+              alert('게임 클리어');
+              document.location.reload();
+            }
+          }
+
           if (Board[i][j] === 0) {
             // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
             scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10; // 수정하셔도 됩니다
@@ -143,6 +177,24 @@ function drawBoard() {
                 ) {
                   ctx.clearRect(x,y,chooseImage.width, chooseImage.height);
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;  //여기 나중에 아이템 로직 넣으면 될 듯.
+                if(randomImageUrl == 'img/item3.png') {
+                  paddleWidth = 200;
+                  // let longPaddleTime = 5;
+                  // const longPaddleItemInterval = setInterval(function() {
+                  //   --longPaddleTime;
+                  // }, 1000);
+                  // if(longPaddleTime === 0) {
+                  //   clearInterval(longPaddleItemInterval);
+                  //   paddleWidth = 150;
+                  // }
+                  // ctx.drawImage(longPaddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+                  longPaddleItemTimeOut = setTimeout(function() {
+                    paddleWidth = 150;
+                  }, 5000);
+                }
+                if(randomImageUrl == 'img/item3.png') {
+                  clearTimeout(longPaddleItemTimeOut);
+                }
               } else {
                 requestAnimationFrame(() => animateItem(chooseImage, x, y));
               }
