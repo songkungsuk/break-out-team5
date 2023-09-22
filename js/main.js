@@ -1,10 +1,8 @@
-let isStarted = false;
-let interval;
-let life = 3;
-let life_html = '';
-// 이미지 블럭 그릴려면 window.addEventListener() 해야하는데 이걸해버리면 Interval 함수가 안으로들어가버려서 사용을못해서..일단 임시로 이렇게하세요..ㅠㅜㅠ 후에 게임오버 만들죠..
+
+//이미지가 로딩되려면 load이벤트를 충족해야함
 window.addEventListener('load', function () {
-    //여기다 여러분들이 만든거 합칠생각중
+
+    // 실험용
     // Board[4][5] = 10;
     // Board[4][10] = 10;
     // Board[2][2] = 10;
@@ -20,7 +18,7 @@ window.addEventListener('load', function () {
     }
     document.querySelector('#lives').innerHTML = life_html;
 
-    //여기다 여러분들이 만든거 합칠생각중
+
     drawPaddle(); // 공받아치는 판
     drawMoveBall(); //공 그리기
     drawBoard(); //벽돌그리기

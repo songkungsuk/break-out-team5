@@ -1,11 +1,14 @@
 const rows = 6; //행 개수
 const cols = 12; //열 개수
 
-const block_width = 87;
-const block_height = 20;
-let scoreTitle = document.querySelector("#score");
+const block_width = 87; //블럭 가로길이
+const block_height = 20; // 블럭 세로길이
+let scoreTitle = document.querySelector("#score"); // 
 const Board = [];
 let stage = 1;
+//---------------------------------------변수 선언은 위에다 하는게좋아요.. 그때그때 생성해버리면 보기 어지러워요..-----------------------------
+
+
 // for (let i = 0; i < rows; i++) {
 //   Board[i] = [];
 //   for (let j = 0; j < cols; j++) {
@@ -38,14 +41,14 @@ function drawBoard() {
           y <= brickY + block_height
         ) {
           // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
-          // Board[i][j] -= 1;
+          Board[i][j] -= 1; 
 
           // 블럭 한개 부딪히면 다 없어지게 하는 코드인데 그냥 다음 스테이지로 넘어가는거 실험하려고 넣은거임
-          for (let i = 0; i < Board.length; i++) {
-            for (let j = 0; j < Board[i].length; j++) {
-              Board[i][j] = 0;
-            }
-          }
+          // for (let i = 0; i < Board.length; i++) {
+          //   for (let j = 0; j < Board[i].length; j++) {
+          //     Board[i][j] = 0;
+          //   }
+          // }
 
           if (Board.every(function (board) {
             if (board.every(function (value) {
@@ -63,7 +66,7 @@ function drawBoard() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawPaddle(); // 공받아치는 판
             drawBall(); //공 그리기
-            drawBoard();
+            drawBoard(); // 블럭그리기
             if (stage == 2) {
               drawStage2();
             } else if (stage == 3) {
@@ -82,12 +85,6 @@ function drawBoard() {
           // 충돌 지점 계산
           const collisionX = x + ballSize / 2;
           const collisionY = y + ballSize;
-          console.log("충돌지점 x" + collisionX);
-          console.log("충돌지점 y" + collisionY);
-          console.log("블럭 좌표 x" + brickX);
-          console.log("x좌표" + x);
-          console.log("블럭 좌표 y" + brickY);
-          console.log("y좌표" + y);
 
           // 블록의 오른쪽끝 아래쪽끝 좌표 계산
           const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
@@ -141,6 +138,7 @@ function drawBoard() {
           };
           chooseImage.src = randomImageUrl;
 
+          //ㅇㅅㅇ..함수는 따로 빼놓아도 될거같은디 ㅇㅅㅇ 위에다 빼죠
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight;
             if (y <= canvas.height) { // 캔버스 높이에서 떨어지면
@@ -183,7 +181,6 @@ function drawBoard() {
             }
           }
         }
-
         if (Board[i][j] === 5) {
           ctx.drawImage(itemImage, brickX, brickY);
         }

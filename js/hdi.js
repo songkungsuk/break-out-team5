@@ -4,6 +4,11 @@ const ctx = canvas.getContext("2d");// var -> const로 변경
 let x = canvas.width / 2;
 let y = canvas.height - 130;// 공 시작 위치인 것 같은데 패달보다 위에서 시작하게 하려고 수치 조금 바꿈
 
+let isStarted = false;
+let interval;
+let life = 3;
+let life_html = '';
+
 const strong_block = new Image();
 strong_block.src = "../img/strong_block.png";
 const nomal_block = new Image();

@@ -11,13 +11,12 @@ function drawMoveBall() {
   // x,y좌표를 통해 공그림
 
   drawBall();
-
+  // 좌,우 둘 중에 하나라도 벽에 부딪히면 공이 dx에서 -dx음수 값으로 변하면서 공이 반대방향으로 튐.
   if (x + dx > canvas.width - ballSize || x + dx < ballSize) {
-    // 좌,우 둘 중에 하나라도 벽에 부딪히면 공이 dx에서 -dx음수 값으로 변하면서 공이 반대방향으로 튐.
     dx = -dx;
   }
+  // 상,하단 둘 중에 하나라도 벽에 부딪히면 공이 dy에서 -dy로 뀌면서 공이 반대로 튀게됨
   if (y + dy < ballSize) {
-    // 상,하단 둘 중에 하나라도 벽에 부딪히면 공이 dy에서 -dy로 뀌면서 공이 반대로 튀게됨
     dy = -dy;
   }
   // else if 인거 if로 수정 그리고 100 -> 90으로 수정 패들을 얇게해서 얇아진만큼 타점을 조정했음 -송경석-
@@ -62,12 +61,12 @@ function drawMoveBall() {
   if (y + dy > canvas.height) {
     // 이미지 블럭 그릴려면 window.addEventListener() 해야하는데 이걸해버리면 Interval 함수가 안으로들어가버려서 사용을못해서..일단 임시로 이렇게하세요..ㅠㅜㅠ
     // 바닥에 닿으면 게임 종료 후 새로고침
-    --life;
-    life_html = '';
+    --life; //목숨감소
+    //목숨을 그리기위한 변수
+    life_html = ''; 
     for (let i = 0; i < life; i++) {
       life_html += '<img src="/img/ball2.png" alt="공"></img>';
     }
-
     if (life === 0) {
       alert("게임 종료ㅋㅋ") //ㅋㅋ
       clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
