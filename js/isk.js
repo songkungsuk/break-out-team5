@@ -9,17 +9,17 @@ const block_height = 20;
 let scoreTitle = document.querySelector("#score");
 const Board = [];
 
+//stage1
 for (let i = 0; i < rows; i++) {
   Board[i] = [];
   for (let j = 0; j < cols; j++) {
     //임시로 이렇게 초기화 했음 -경석-
-    if (j % 3 == 0) {
+    if (j !=  0 && j != cols-1) {
       Board[i][j] = 1;
-    } else {
-      Board[i][j] = 2;
     }
   } //보드의 각 행을 초기화하는 반복문
 }
+
 
 /*
 정해준이 수정함
@@ -112,9 +112,10 @@ function drawBoard() {
           Board[i][j] = 0; // 
         
           const imageUrls = [ 
-            "img/item_block.png",
-            "img/strong_block.png",
-            "img/nobroken_block.png",
+            "img/item1.png",
+            "img/item2.png",
+            "img/item3.png",
+            "img/item4.png"
           ];
           const randomImageUrl =
             imageUrls[Math.floor(Math.random() * imageUrls.length)];

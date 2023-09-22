@@ -34,57 +34,32 @@ livesElement.textContent = lives;
 
     //  1단계
     // for (let i = 0; i < numrows; i++) {
-
     //     for (let j = 0; j < numcols; j++) {
-    //         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
-    //         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
     //         if (j !== 0 && j !== 11) {
-    //             if (blocks[i][j] == 1) {
-    //                 mainContext.drawImage(img, brickX, brickY, block_width, block_height);
-    //             }
+    //             blocks[i][j] == 1;
     //         }
     //     }
     // }
     // 2단계
     // for (let i = 0; i < numrows; i++) {
     //     for (let j = i + 5; j < numcols; j++) {
-    //         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
-    //         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
-
-    //         if (blocks[i][j] == 1) {
-    //             mainContext.drawImage(img, brickX, brickY, block_width, block_height);
-    //         }
-
+    //        blocks[i][j] == 1;
     //     }
     // }
-
     // for (let i = numrows-1; i > 0; i--) {
     //     for (let j = 0; j <numrows-i; j++) {
-    //         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
-    //         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
-
-    //         if (blocks[i][j] == 1) {
-    //             mainContext.drawImage(img, brickX, brickY, block_width, block_height);
-    //         }
-
+    //         blocks[i][j] == 1;
     //     }
     // }
 
     // // 3단계
     // for (let i = 0; i < numrows; i++) {
     //     for (let j = 0; j < numcols; j++) {
-    //         const brickX = j * (block_width + 1) + 15; // x좌표값 계산
-    //         const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
-
     //         if (i % 2 === 0 && j % 2 === 1) {
-    //             if (blocks[i][j] == 1) {
-    //                 mainContext.drawImage(img, brickX, brickY, block_width, block_height);
-    //             }
+    //             blocks[i][j] == 1;
     //         }
     //         else if( i % 2 === 1 && j%2 === 0){
-    //             if (blocks[i][j] == 1) {
-    //                 mainContext.drawImage(img, brickX, brickY, block_width, block_height);
-    //             }
+    //             blocks[i][j] == 1;
     //         }
     //     }
     // }
