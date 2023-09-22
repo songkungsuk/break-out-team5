@@ -128,7 +128,7 @@ function drawBoard() {
           chooseImage.src = randomImageUrl;
         
           let itemX = brickX; // 이미지 그릴 x좌표
-          let itemY = brickY; // 이미지 그릴 y좌표
+          let itemY = brickY; // 이미지 그릴 y좌표 -?
         
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight;
