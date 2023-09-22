@@ -137,21 +137,26 @@ function drawBoard() {
             animateItem(chooseImage, brickX, brickY);
           };
           chooseImage.src = randomImageUrl;
-
+          
           //ㅇㅅㅇ..함수는 따로 빼놓아도 될거같은디 ㅇㅅㅇ 위에다 빼죠
           function animateItem(chooseImage, x, y) {
             const paddleY = canvas.height - paddleHeight;
-            if (y <= canvas.height) { // 캔버스 높이에서 떨어지면
-              ctx.clearRect(0, 0, chooseImage.width, chooseImage.height);
+            if(y <= canvas.height){
+                ctx.clearRect(x,y, chooseImage.width, chooseImage.height);
+            }
+            
+             // 캔버스 높이에서 떨어지면
+
               y += 5; //이미지 내려가는 속도 조절할 수 있음
               ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 
-              if (
-                x + chooseImage.width >= paddleXPosition &&  // 이미지랑 패들이랑 충돌했을때 점수 올라감 나머지는 안됨
-                x <= paddleXPosition + paddleWidth &&
-                y + chooseImage.width >= paddleXPosition
+               if (
+                x < paddleXPosition + paddleWidth &&
+                x + chooseImage.width > paddleXPosition &&
+                y + chooseImage.height >= paddleY - 50 && // 아이템을 먹었을때 이미지 사라지는거 수정
+                y < paddleY + paddleHeight
               ) {
-                ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
-                scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;  //여기 나중에 아이템 로직 넣으면 될 듯.
+                scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
+                ctx.clearRect(x, y-5, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
                 if (randomImageUrl == 'img/item3.png') {
                   paddleWidth = 200;
                   // let longPaddleTime = 5;
@@ -171,11 +176,10 @@ function drawBoard() {
                   clearTimeout(longPaddleItemTimeOut);
                 }
               } else {
-                requestAnimationFrame(() => animateItem(chooseImage, x, y));
+                requestAnimationFrame(() => animateItem(chooseImage, x, y+1));
               }
               // 프레임 활용해서 다시 그림
 
-            }
           }
         }
         if (Board[i][j] === 5) {
