@@ -20,57 +20,43 @@ const longPaddleImage = new Image();
 longPaddleImage.src = "../img/long_paddle.png";
 //----------------------------------------------------------------
 
-// Score 변수
-let score = 0;//var ->let로 변경
-const scoreElement = document.querySelector("#score");
-
-// lives 변수
-let lives = 0; //var ->let로 변경
-
-const livesElement = document.querySelector("#lives");
-
-// 기존 js에서 헤더를 초기값으로 변경할 수 있도록 함 
-scoreElement.textContent = score;
-livesElement.textContent = lives;
-
-
-     //  1단계
-     function drawStage1() {
-        for (let i = 0; i < rows; i++) {
-            Board[i] = [];
-            for (let j = 0; j < cols; j++) {
-                if (j !== 0 && j !== 11) {
-                    Board[i][j] = 5;
-                }
+//  1단계
+function drawStage1() {
+    for (let i = 0; i < rows; i++) {
+        Board[i] = [];
+        for (let j = 0; j < cols; j++) {
+            if (j !== 0 && j !== 11) {
+                Board[i][j] = 1;
             }
         }
     }
-    // 2단계
-    function drawStage2() {
-        for (let i = 0; i < rows; i++) {
-            Board[i] = [];
-            for (let j = i + 5; j < cols; j++) {
-               Board[i][j] = 5;
-            }
-        }
-        for (let i = rows-1; i > 0; i--) {
-            for (let j = 0; j <rows-i; j++) {
-                Board[i][j] = 5;
-            }
+}
+// 2단계
+function drawStage2() {
+    for (let i = 0; i < rows; i++) {
+        Board[i] = [];
+        for (let j = i + 6; j < cols; j++) {
+            Board[i][j] = 1;
         }
     }
+    for (let i = rows; i >= 0; i--) {
+        for (let j = 0; j < rows - i; j++) {
+            Board[i][j] = 1;
+        }
+    }
+}
 
-    // 3단계
-    function drawStage3() {
-        for (let i = 0; i < rows; i++) {
-            Board[i] = [];
-            for (let j = 0; j < cols; j++) {
-                if (i % 2 === 0 && j % 2 === 1) {
-                    Board[i][j] = 5;
-                }
-                else if( i % 2 === 1 && j%2 === 0){
-                    Board[i][j] = 5;
-                }
+// 3단계
+function drawStage3() {
+    for (let i = 0; i < rows; i++) {
+        Board[i] = [];
+        for (let j = 0; j < cols; j++) {
+            if (i % 2 === 0 && j % 2 === 1) {
+                Board[i][j] = 1;
+            }
+            else if (i % 2 === 1 && j % 2 === 0) {
+                Board[i][j] = 1;
             }
         }
     }
+}

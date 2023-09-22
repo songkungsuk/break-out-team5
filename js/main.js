@@ -5,17 +5,17 @@ let life_html = '';
 // 이미지 블럭 그릴려면 window.addEventListener() 해야하는데 이걸해버리면 Interval 함수가 안으로들어가버려서 사용을못해서..일단 임시로 이렇게하세요..ㅠㅜㅠ 후에 게임오버 만들죠..
 window.addEventListener('load', function () {
     //여기다 여러분들이 만든거 합칠생각중
-    Board[4][5] = 10;
-    Board[4][10] = 10;
-    Board[2][2] = 10;
+    // Board[4][5] = 10;
+    // Board[4][10] = 10;
+    // Board[2][2] = 10;
     Board[5][10] = 5;
     Board[3][6] = 2;
     Board[2][1] = 2;
     Board[1][6] = 2;
-    
 
-    dy=0;
-    for(let i=0; i<life; i++){
+
+    dy = 0;
+    for (let i = 0; i < life; i++) {
         life_html += '<img src="/img/ball2.png" alt="공"></img>';
     }
     document.querySelector('#lives').innerHTML = life_html;
@@ -30,7 +30,7 @@ window.addEventListener('load', function () {
         document.querySelector('#startMsg').innerHTML = '';
         isStarted = true;
         dy = -3;
-        dx=0;
+        dx = 0;
         console.log(dy);
         clearInterval(interval);
         interval = setInterval(function () {

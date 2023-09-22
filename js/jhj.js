@@ -5,11 +5,6 @@ const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 function drawBall() {
   // 공 그리는 로직
   ctx.drawImage(ballImage, x - 10, y, 30, 30);
-  // ctx.beginPath(); // 선 그림
-  // ctx.arc(x, y, ballSize, 0, Math.PI * 2); // 곡선을 그려 공을 만들어냄.
-  // ctx.fillStyle = "green";
-  // ctx.fill();
-  // ctx.closePath();
 }
 
 function drawMoveBall() {
@@ -30,7 +25,7 @@ function drawMoveBall() {
     // 26번줄 ~ 36번줄 - 류승호가 추가하였습니다. 패달에 맞으면 튀김
     if (x >= paddleXPosition && x <= paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
       console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
-    //dx고정 값에서 랜덤으로 수정됐습니다 /성규
+      //dx고정 값에서 랜덤으로 수정됐습니다 /성규
       if (x < paddleXPosition + (paddleWidth / 8)) { // paddleWidth - paddleWidth/8 = 18.??
         dx = Math.random() - 4;
         console.log('맞은 부분 = 1/8, x축 속도 = ' + dx + '로 변경');
