@@ -57,7 +57,7 @@ function drawBoard() {
           // Board[2][1] = 2;
           // Board[1][6] = 2;
 
-          if (Board.every(function (board) {  // 보드 배열 전체가 펑션을 만족하면 true를 리턴해서 다음스테이지로 넘어가는건데..너무 복잡하게 생각했나?
+          if (Board.every(function (board) {  // 보드 배열 전체가 펑션을 만족하면 true를 리턴해서 다음스테이지로 넘어가는건데..너무 복잡하게 생각했나? 네
             // 위 펑션에서 받은 board는 보드 배열 안의 배열을 말하는거임, Board가 Board[i]라면 board는 Board[i][j] 같은 느낌
             for(let i=0; i<board.length; i++) {
               if(board[i] == 0 || board[i] == 9 || board[i] == 10) {  // 보드 배열 안의 배열이 0(부서져서 없는 블록)이거나 9(안깨지는 블록)이거나 10(안깨지는 블록)이면 true 리턴, 안깨지는 블록이 왜 2개인지는 모르겠음
