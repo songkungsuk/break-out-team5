@@ -30,7 +30,7 @@ function drawStage1() {
     for (let i = 0; i < rows; i++) {
         Board[i] = [];
         for (let j = 0; j < cols; j++) {
-            if (j !== 0 && j !== 11) {
+            if (j !== 0 && j !== 11 && i  > 1 ) {
                 Board[i][j] = 1;
             }
         }

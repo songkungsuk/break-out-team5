@@ -1,4 +1,4 @@
-const rows = 6; //행 개수
+const rows = 8; //행 개수
 const cols = 12; //열 개수
 
 const block_width = 87; //블럭 가로길이
@@ -76,9 +76,12 @@ function drawBoard() {
             drawBall(); //공 그리기
             drawBoard(); // 블럭그리기
             if (stage == 2) {
+              dx=0;
               drawStage2();
             } else if (stage == 3) {
+              dx=0;
               drawStage3();
+
             } else {
               // 게임 클리어하는 부분인데 일단 임시로 이렇게 해 놓았음
               alert('게임 클리어');
