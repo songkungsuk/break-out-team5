@@ -1,5 +1,5 @@
 const paddleHeight = 20; //패들 세로길이
-const paddleWidth = 150; //패들 가로길이
+let paddleWidth = 150; //패들 가로길이
 let paddleXPosition = (canvas.width - paddleWidth) / 2;     // 공 받이의 x축 위치(가로 위치)
 
 // 공 받이 그리는 함수
