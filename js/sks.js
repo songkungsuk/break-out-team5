@@ -22,5 +22,3 @@ img.onload = function () {
         }
     }
 }
-
-

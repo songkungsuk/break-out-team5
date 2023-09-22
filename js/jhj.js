@@ -5,24 +5,18 @@ const ballSize = 10; // 공 사이즈 크기 10으로 지정.
 function drawBall() {
   // 공 그리는 로직
   ctx.drawImage(ballImage, x - 10, y, 30, 30);
-  // ctx.beginPath(); // 선 그림
-  // ctx.arc(x, y, ballSize, 0, Math.PI * 2); // 곡선을 그려 공을 만들어냄.
-  // ctx.fillStyle = "green";
-  // ctx.fill();
-  // ctx.closePath();
 }
 
 function drawMoveBall() {
   // x,y좌표를 통해 공그림
 
   drawBall();
-
+  // 좌,우 둘 중에 하나라도 벽에 부딪히면 공이 dx에서 -dx음수 값으로 변하면서 공이 반대방향으로 튐.
   if (x + dx > canvas.width - ballSize || x + dx < ballSize) {
-    // 좌,우 둘 중에 하나라도 벽에 부딪히면 공이 dx에서 -dx음수 값으로 변하면서 공이 반대방향으로 튐.
     dx = -dx;
   }
+  // 상,하단 둘 중에 하나라도 벽에 부딪히면 공이 dy에서 -dy로 뀌면서 공이 반대로 튀게됨
   if (y + dy < ballSize) {
-    // 상,하단 둘 중에 하나라도 벽에 부딪히면 공이 dy에서 -dy로 뀌면서 공이 반대로 튀게됨
     dy = -dy;
   }
   // else if 인거 if로 수정 그리고 100 -> 90으로 수정 패들을 얇게해서 얇아진만큼 타점을 조정했음 -송경석-
@@ -30,8 +24,9 @@ function drawMoveBall() {
     // 26번줄 ~ 36번줄 - 류승호가 추가하였습니다. 패달에 맞으면 튀김
     if (x >= paddleXPosition && x <= paddleXPosition + paddleWidth) {  // 공의 위치가 패달의 y축(높이)에 닿고 패달의 x축(가로) 범위 안에 있으면 튀김 (그냥 쉽게말해서 패달에 맞으면 튀긴다는거임)
       console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
+      //dx고정 값에서 랜덤으로 수정됐습니다 /성규
       if (x < paddleXPosition + (paddleWidth / 8)) { // paddleWidth - paddleWidth/8 = 18.??
-        dx = -3;
+        dx = Math.random() - 4;
         console.log('맞은 부분 = 1/8, x축 속도 = ' + dx + '로 변경');
       }
       if (x === (paddleXPosition + paddleWidth) / 2) {
@@ -39,25 +34,25 @@ function drawMoveBall() {
         console.log('맞은 부분 = 정중앙, x축 속도 = ' + dx + '로 변경');
       }
       else if (x < paddleXPosition + (paddleWidth / 8) * 2) {
-        dx = -2.5;
+        dx = Math.random() - 3;
         console.log('맞은 부분 = 2/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 3) {
-        dx = -2;
+        dx = Math.random() - 2;
         console.log('맞은 부분 = 3/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 4) {
-        dx = -1;
+        dx = Math.random() - 1;
         console.log('맞은 부분 = 4/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 5) {
-        dx = 1;
+        dx = Math.random();
         console.log('맞은 부분 = 5/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 6) {
-        dx = 2;
+        dx = Math.random() + 1;
         console.log('맞은 부분 = 6/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 7) {
-        dx = 2.5;
+        dx = Math.random() + 2;
         console.log('맞은 부분 = 7/8, x축 속도 = ' + dx + '로 변경');
       } else if (x <= paddleXPosition + (paddleWidth / 8) * 8) {
-        dx = 3;
+        dx = Math.random() + 3;
         console.log('맞은 부분 = 8/8, x축 속도 = ' + dx + '로 변경');
       }
       dy = -dy;
@@ -73,7 +68,7 @@ function drawMoveBall() {
       clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
       document.location.reload();
     } else {
-      document.querySelector('#lives').innerText = life;
+      document.querySelector('#lives').innerHTML = life_html;
       // alert('목숨 감소');
       clearInterval(interval);
       isStarted = false;  // rsh.js에 마우스무브 이벤트에 있는 if(!isStarted) 때문에 적어놓음
