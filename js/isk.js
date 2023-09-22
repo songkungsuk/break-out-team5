@@ -112,9 +112,10 @@ function drawBoard() {
           Board[i][j] = 0; // 
         
           const imageUrls = [ 
-            "img/item_block.png",
-            "img/strong_block.png",
-            "img/nobroken_block.png",
+            "img/item1.png",
+            "img/item2.png",
+            "img/item3.png",
+            "img/item4.png"
           ];
           const randomImageUrl =
             imageUrls[Math.floor(Math.random() * imageUrls.length)];
@@ -135,11 +136,11 @@ function drawBoard() {
         
               ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
               y += 5; //이미지 내려가는 속도 조절할 수 있음
-              ctx.drawImage(chooseImage, x, y);//이미지 그리는 
+              ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 
               if (
                 x + chooseImage.width >= paddleXPosition &&  // 이미지랑 패들이랑 충돌했을때 점수 올라감 나머지는 안됨
                 x <= paddleXPosition + paddleWidth &&
-                y + chooseImage.height >= paddleY
+                y + chooseImage.width >= paddleXPosition
               ) {
                 scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
                 ctx.clearRect(x, y, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
