@@ -18,3 +18,4 @@ const player = new AudioPlayer();
 const attack_block = document.querySelector('#attack_block');
 const eat_item = document.querySelector('#eat_item');
 const paddle_sound = document.querySelector('#paddle_sound');
+const stageClear = document.querySelector('#stageClear');
