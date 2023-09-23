@@ -21,15 +21,15 @@ const chooseImage = new Image(); // 이미지 객채 생성
 //-------------------------------------------------------------함수---------어차피 윈도우 로드이벤트라 그냥 순서막놔도됨 function먼저 읽으니까!------------------------------------------
 
 
-// 8초후에 패들길이가 원래대로 돌아오게하는것
+// 20초후에 패들길이가 원래대로 돌아오게하는것
 function longPaddleItemTimeOut() {
   setTimeout(function () {
     paddleWidth = 150;
     drawPaddle();
-  }, 8000);
+  }, 20000);
 }
 
-// 5초후에 블럭 마구잡이로 부수는거 원래대로 돌아오게함
+// 10초후에 블럭 마구잡이로 부수는거 원래대로 돌아오게함
 function PowerballItemTimeOut() {
   setTimeout(function () {
     isGetItem2 = false;
