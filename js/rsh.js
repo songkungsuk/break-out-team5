@@ -1,10 +1,23 @@
 const paddleHeight = 20; //패들 세로길이
 let paddleWidth = 150; //패들 가로길이
 let paddleXPosition = (canvas.width - paddleWidth) / 2;     // 공 받이의 x축 위치(가로 위치)
-
+let effect = false; // 공이 패들을 맞았을때 나오는 이펙트
 // 공 받이 그리는 함수
 function drawPaddle() {
-    ctx.drawImage(paddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+    if(!effect){
+        ctx.drawImage(paddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+    }
+    else{
+        ctx.drawImage(paddleImage2, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+    }
+}
+
+// 공과 패들이 맞았을때 나오는 효과
+function ballPaddleEffect(){
+  setTimeout(function(){
+    effect = false;
+    drawPaddle();
+  }, 100);
 }
 
 // 마우스 움직일 때마다 공 받이 위치 바뀜

@@ -15,5 +15,6 @@ class AudioPlayer {
 }
 
 const player = new AudioPlayer();
-const attack_block = document.querySelector('#atack_block');
-attack_block.volume = 0.5; //효과음소리가 너무 커서 크기조절했음
+const attack_block = document.querySelector('#attack_block');
+const eat_item = document.querySelector('#eat_item');
+const paddle_sound = document.querySelector('#paddle_sound');

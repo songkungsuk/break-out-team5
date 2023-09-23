@@ -9,8 +9,8 @@ let stage = 1; //스테이지 번호
 let remains = 0; // 남아있는 블럭 체크용 변수
 const imageUrls = [
   // "img/item1.png",
-  "img/item2.png",
-  // "img/item3.png",
+  // "img/item2.png",
+  "img/item3.png",
   // "img/item4.png"
 ];
 
@@ -25,6 +25,7 @@ const chooseImage = new Image(); // 이미지 객채 생성
 function longPaddleItemTimeOut() {
   setTimeout(function () {
     paddleWidth = 150;
+    drawPaddle();
   }, 8000);
 }
 
@@ -32,8 +33,14 @@ function longPaddleItemTimeOut() {
 function PowerballItemTimeOut() {
   setTimeout(function () {
     isGetItem2 = false;
+    ctx.clearRect(0, y - 100, 1080, canvas.height - paddleHeight);
+    drawBall();
+    drawPaddle();
   }, 10000);
 }
+
+
+
 
 // 아이템 그리는 함수
 function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
@@ -54,7 +61,7 @@ function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개�
   ) {
     scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
     ctx.clearRect(x, y - 5, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
-
+    player.play(eat_item);//효과음재생
 
     //먹은 아이템에 대해서
     if (Url == 'img/item1.png') {
