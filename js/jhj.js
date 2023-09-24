@@ -73,7 +73,7 @@ function drawMoveBall() {
     --life; // 목숨감소
     life_html = ''; //새로써야겠지?
     for (let i = 0; i < life; i++) {
-      life_html += '<img src="/img/ball2.png" alt="공"></img>';
+      life_html += '<img src="/img/ball.png" alt="공"></img>';
     }
     document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
 
