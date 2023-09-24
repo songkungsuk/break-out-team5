@@ -14,7 +14,7 @@ window.addEventListener('load', function () {
 
     dy = 0;
     for (let i = 0; i < life; i++) {
-        life_html += '<img src="/img/ball2.png" alt="공"></img>';
+        life_html += '<img src="/img/ball.png" alt="공"></img>';
     }
     document.querySelector('#lives').innerHTML = life_html;
 

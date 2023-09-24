@@ -24,7 +24,7 @@ paddleImage.src = "../img/paddle.png";
 const paddleImage2 = new Image();
 paddleImage2.src = "../img/paddle2.png";
 const ballImage = new Image();
-ballImage.src = "../img/ball2.png";
+ballImage.src = "../img/ball.png";
 const PowerballImage = new Image();
 PowerballImage.src = "../img/ball4.png";
 const longPaddleImage = new Image();
@@ -44,10 +44,14 @@ function drawStage1() {
     }
 
     // 안뽀개지는 블럭들 임의로 지정했어요 하드코딩 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ
-    Board[4][5] = 10;
-    Board[4][6] = 10;
+    Board[6][5] = 10;
+    Board[6][6] = 10;
+    Board[6][4] = 10;
+    Board[6][7] = 10;
     Board[5][5] = 10;
     Board[5][6] = 10;
+    Board[5][4] = 10;
+    Board[5][7] = 10;
 
 }
 // 2단계

@@ -55,7 +55,7 @@ function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개�
   y += 5; //이미지 내려가는 속도 조절할 수 있음
   ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 위치
   if (
-    x < paddleXPosition + paddleWidth &&
+    x < paddleXPosition + paddleWidth && //?
     x + chooseImage.width > paddleXPosition &&
     y + chooseImage.height >= paddleY && // 아이템을 먹었을때 이미지 사라지는거 수정
     y < paddleY + paddleHeight
@@ -69,7 +69,7 @@ function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개�
       life++; // 목숨증가
       life_html = ''; //새로써야겠지?
       for (let i = 0; i < life; i++) {
-        life_html += '<img src="/img/ball2.png" alt="공"></img>';
+        life_html += '<img src="/img/ball.png" alt="공"></img>';
       }
       document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
     } else if (Url == 'img/item2.png') {
