@@ -28,6 +28,7 @@ window.addEventListener('load', function () {
         document.querySelector('#startMsg').innerHTML = '';
         isStarted = true;
         isBallfloor = false; //공이 바닥으로 떨어졌냐?
+        isEatStickItem = false;
         dy = -3;
         dx = 0;
         console.log(dy);
