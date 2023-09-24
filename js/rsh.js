@@ -24,7 +24,8 @@ function ballPaddleEffect(){
 canvas.addEventListener('mousemove', function (e) {
     if (e.movementX !== 0) {     // x축으로 움직임이 있으면
         if (!isStarted) {
-            ctx.clearRect(0, y - 100, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
+            ctx.clearRect(0, y, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
+            y = canvas.height - 130; // 공의 y축 위치(세로 위치)
             drawBall(); //공그리기
             x = e.offsetX; // 캔버스 안에서 기준으로 마우스의 x축 위치
         }
