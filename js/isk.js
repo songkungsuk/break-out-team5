@@ -11,11 +11,12 @@ const imageUrls = [
   "img/item1.png",
   "img/item2.png",
   "img/item3.png",
-  // "img/item4.png"
+  "img/item4.png"
 ];
 
 let randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
 const chooseImage = new Image(); // 이미지 객채 생성
+let isEatStickItem = false; // 접착 아이템 먹었는지
 
 //---------------------------------------변수 선언은 위에다 하는게좋아요.. 그때그때 생성해버리면 보기 어지러워요..-----------------------------
 //-------------------------------------------------------------함수---------어차피 윈도우 로드이벤트라 그냥 순서막놔도됨 function먼저 읽으니까!------------------------------------------
@@ -78,8 +79,21 @@ function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개�
       paddleWidth = 200;
       longPaddleItemTimeOut();
     } else if (Url == 'img/item4.png') {
-      //접착되게 하는 로직 넣기 그리고 몇초후에는 풀려야겠지 ? 힌트를주면 마치 x의 위치를 패들과 접착한상태로 유지한채로 공을 그려야겠죠 ? ...........여기까지..
+      // 말씀해주신게 먹자 마자 공을 패달에 붙이라는건지 먹고나서 패달에 맞으면 공에 붙이라는 건지 몰라서 일단 둘다 해놓긴 했는데 둘다 아니면 슬플 예정
 
+      // 얘가 먹자마자 공에 패달 붙이는거(86~92번째줄) 
+      // 얘로 쓸거면 이 부분(86~92번째줄)  주석 풀고 아래 부분(96번째줄, jhj.js의 36~ 40줄) 주석처리 하면됨
+      // clearInterval(interval);
+      // ctx.clearRect(0, y, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
+      // y = canvas.height - 130; // 아 왜 마우스 무브에서는 잘 바뀌면서 여기서는 왜 안바뀌냐 진짜(수정예정)
+      // drawBall();
+      // x = paddleXPosition + paddleWidth / 2; // 공의 x축 위치(가로 위치)
+      // drawPaddle();
+      // isStarted = false;
+
+      // 얘가 먹고나서 패달에 맞으면 공에 붙이는거(96번째줄, jhj.js의 36~ 40줄) 
+      // 얘로 쓸거면 이 부분(96번째줄, jhj.js의 36~ 40줄) 주석 풀고 위 부분(86~92번째줄) 주석처리 하면됨
+      isEatStickItem = true;
     }
   } else if (!isBallfloor) { //공안떨어졌으면 이르케그림
     requestAnimationFrame(() => animateItem(chooseImage, x, y + 1)); // 나는 화살표함수모르는데..
