@@ -33,6 +33,15 @@ function drawMoveBall() {
       ballPaddleEffect(); // 암튼그럼.. Ctrl 눌러서 따라가면 어딨는지 볼수있음
       player.play(paddle_sound); //효과음재생
       console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
+      if(isEatStickItem) {
+        clearInterval(interval);
+        ctx.clearRect(0, y, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
+        y = canvas.height - 130;
+        x = paddleXPosition + paddleWidth / 2; // 공의 x축 위치(가로 위치)
+        drawBall();
+        drawPaddle();
+        isStarted = false;
+      }
       //dx고정 값에서 랜덤으로 수정됐습니다 /성규
       if (x < paddleXPosition + (paddleWidth / 8)) { // paddleWidth - paddleWidth/8 = 18.??
         dx = Math.random() - 4;
