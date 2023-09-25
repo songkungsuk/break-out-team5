@@ -11,6 +11,8 @@ let life_html = '';
 let isBallfloor = false;
 let isGetItem2 = false;
 let itemCount = 0; // 아이템 블록 개수
+let StrongCount = 0;// 스트롱 블록 개수
+
 
 const strong_block = new Image();
 strong_block.src = "../img/strong_block.png";
@@ -30,6 +32,7 @@ const PowerballImage = new Image();
 PowerballImage.src = "../img/ball4.png";
 const longPaddleImage = new Image();
 longPaddleImage.src = "../img/long_paddle.png";
+
 
 
 //----------------------------------------------------------------
@@ -65,12 +68,13 @@ function drawStage1() {
 }
 
 // 2단계
+// 2단계
+// 2단계
 function drawStage2() {
     for (let i = 0; i < rows; i++) {
         Board[i] = [];
     }
     for (let i = 2; i < rows; i++) {
-
         for (let j = i + 3; j < cols; j++) {
             Board[i][j] = 1;
         }
@@ -80,7 +84,30 @@ function drawStage2() {
             Board[i][j] = 1;
         }
     }
+    
+    while (itemCount <= 8 && StrongCount <= 8) {
+        const randomRow = Math.floor(Math.random() * (rows - 2)) + 2; 
+        const randomCol = Math.floor(Math.random() * (cols - (randomRow + 3))) + (randomRow + 3); 
+        
+        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2) {
+            // 아이템을 5로, 혹은 2로 설정
+            if (Math.random() < 0.5) {
+                Board[randomRow][randomCol] = 5;
+            } else {
+                Board[randomRow][randomCol] = 2;
+            }
+            itemCount++; 
+            StrongCount++;
+        }
+    }
 }
+
+
+
+
+
+
+
 
 // 3단계
 function drawStage3() {
@@ -89,10 +116,41 @@ function drawStage3() {
         for (let j = 0; j < cols; j++) {
             if (i % 2 === 0 && j % 2 === 1) {
                 Board[i][j] = 1;
-            }
-            else if (i % 2 === 1 && j % 2 === 0) {
+            } else if (i % 2 === 1 && j % 2 === 0) {
                 Board[i][j] = 1;
+            } else {
+                Board[i][j] = 0; // 나머지 요소 초기화 (0 또는 다른 값으로 초기화)
             }
         }
     }
+
+    // 아이템 블록 5개 생성했는데 기존에 가운데 블록 생성되어있어서 일부러 생성한건지 몰라서 그냥 냅둠 stage2도 마찬가지
+    let itemCount = 0;
+    while (itemCount < 5) {
+        const randomRow = Math.floor(Math.random() * rows);
+        const randomCol = Math.floor(Math.random() * cols);
+
+        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2 && Board[randomRow][randomCol] !== 9) {
+            Board[randomRow][randomCol] = 5; // 아이템 블록
+            itemCount++;
+        }
+    }
+
+    // 스트롱 블록 5개 생성
+    let strongCount = 0;
+    while (strongCount < 5) {
+        const randomRow = Math.floor(Math.random() * rows);
+        const randomCol = Math.floor(Math.random() * cols);
+
+        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2 && Board[randomRow][randomCol] !== 9) {
+            Board[randomRow][randomCol] = 2; // 스트롱 블록
+            strongCount++;
+        }
+    }
+
+    // nobroken_block 배치
+    Board[9][0] = 9; // nobroken_block 오른쪽 아래
+    Board[8][11] = 9; // nobroken_block 왼쪽 아래
 }
+
+
