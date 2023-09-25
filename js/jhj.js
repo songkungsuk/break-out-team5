@@ -33,9 +33,17 @@ function drawMoveBall() {
       effect = true; //패들에 이펙트주려고..
       ballPaddleEffect(); // 암튼그럼.. Ctrl 눌러서 따라가면 어딨는지 볼수있음
       player.play(paddle_sound); //효과음재생
-      console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
+      // console.log('공 위치 = ' + x + ', ' + '패들위치 = ' + paddleXPosition);
       if(isEatStickItem) {
         clearInterval(interval);
+        interval = setInterval(function () {
+          //지우고 그리고 반복하겠지.. 충돌함수도 고려..
+          ctx.clearRect(0, 0, canvas.width, canvas.height); //그린거 다시 그리기위해 전체 백지화
+          //drawPaddle하고 drawMoveBall 순서바꾸면안되네요
+          drawPaddle(); // 공받아치는 판
+          drawBall();
+          drawBoard(); //벽돌그리기
+      }, 1);
         ctx.clearRect(0, y, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
         y = canvas.height - 130;
         // console.log('공의 위치 = ' + x);
@@ -49,33 +57,33 @@ function drawMoveBall() {
       //dx고정 값에서 랜덤으로 수정됐습니다 /성규
       if (x < paddleXPosition + (paddleWidth / 8)) { // paddleWidth - paddleWidth/8 = 18.??
         dx = Math.random() - 4;
-        console.log('맞은 부분 = 1/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 1/8, x축 속도 = ' + dx + '로 변경');
       }
       if (x === (paddleXPosition + paddleWidth) / 2) {
         dx = 0;
-        console.log('맞은 부분 = 정중앙, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 정중앙, x축 속도 = ' + dx + '로 변경');
       }
       else if (x < paddleXPosition + (paddleWidth / 8) * 2) {
         dx = Math.random() - 3;
-        console.log('맞은 부분 = 2/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 2/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 3) {
         dx = Math.random() - 1.2;
-        console.log('맞은 부분 = 3/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 3/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 4) {
         dx = Math.random() - 0.5;
-        console.log('맞은 부분 = 4/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 4/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 5) {
         dx = Math.random();
-        console.log('맞은 부분 = 5/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 5/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 6) {
         dx = Math.random() + 0.5;
-        console.log('맞은 부분 = 6/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 6/8, x축 속도 = ' + dx + '로 변경');
       } else if (x < paddleXPosition + (paddleWidth / 8) * 7) {
         dx = Math.random() + 1.2;
-        console.log('맞은 부분 = 7/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 7/8, x축 속도 = ' + dx + '로 변경');
       } else if (x <= paddleXPosition + (paddleWidth / 8) * 8) {
         dx = Math.random() + 3;
-        console.log('맞은 부분 = 8/8, x축 속도 = ' + dx + '로 변경');
+        // console.log('맞은 부분 = 8/8, x축 속도 = ' + dx + '로 변경');
       }
       dy = -dy;
     }

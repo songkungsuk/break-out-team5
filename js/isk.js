@@ -8,8 +8,8 @@ const Board = []; //배열 초기화
 let stage = 1; //스테이지 번호
 let remains = 0; // 남아있는 블럭 체크용 변수
 const imageUrls = [
-  "img/item1.png",
-  "img/item2.png",
+  // "img/item1.png",
+  // "img/item2.png",
   "img/item3.png",
   "img/item4.png"
 ];
@@ -26,6 +26,7 @@ let isEatStickItem = false; // 접착 아이템 먹었는지
 function longPaddleItemTimeOut() {
   setTimeout(function () {
     paddleWidth = 150;
+    ctx.clearRect(0, y - 100, 1080, canvas.height - paddleHeight);
     drawPaddle();
   }, 20000);
 }
@@ -39,8 +40,6 @@ function PowerballItemTimeOut() {
     drawPaddle();
   }, 10000);
 }
-
-
 
 
 // 아이템 그리는 함수
@@ -76,24 +75,15 @@ function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개�
       isGetItem2 = true;
       PowerballItemTimeOut();
     } else if (Url == 'img/item3.png') {
+      console.log(chooseImage.src.slice(21));
       paddleWidth = 200;
       longPaddleItemTimeOut();
     } else if (Url == 'img/item4.png') {
-      // 말씀해주신게 먹자 마자 공을 패달에 붙이라는건지 먹고나서 패달에 맞으면 공에 붙이라는 건지 몰라서 일단 둘다 해놓긴 했는데 둘다 아니면 슬플 예정
-
-      // 얘가 먹자마자 공에 패달 붙이는거(86~92번째줄) 
-      // 얘로 쓸거면 이 부분(86~92번째줄)  주석 풀고 아래 부분(96번째줄, jhj.js의 36~ 40줄) 주석처리 하면됨
-      // clearInterval(interval);
-      // ctx.clearRect(0, y, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
-      // y = canvas.height - 130; // 아 왜 마우스 무브에서는 잘 바뀌면서 여기서는 왜 안바뀌냐 진짜(수정예정)
-      // drawBall();
-      // x = paddleXPosition + paddleWidth / 2; // 공의 x축 위치(가로 위치)
-      // drawPaddle();
-      // isStarted = false;
-
-      // 얘가 먹고나서 패달에 맞으면 공에 붙이는거(96번째줄, jhj.js의 36~ 40줄) 
-      // 얘로 쓸거면 이 부분(96번째줄, jhj.js의 36~ 40줄) 주석 풀고 위 부분(86~92번째줄) 주석처리 하면됨
+      console.log(chooseImage.src.slice(21));
       isEatStickItem = true;
+      setTimeout(function() {
+        isEatStickItem = false;
+      }, 10000);
     }
   } else if (!isBallfloor) { //공안떨어졌으면 이르케그림
     requestAnimationFrame(() => animateItem(chooseImage, x, y + 1)); // 나는 화살표함수모르는데..
@@ -228,6 +218,13 @@ function drawBoard() {
         }
         if (Board[i][j] === 4) {
           Board[i][j] = 0; // 
+          // 아이템 떨어지는 중에 다른 아이템 블록 맞춰서 다른 아이템 블록 떨구면 떨어지던 아이템이 가장 마지막에 맞힌 아이템 블록의 아이템으로 바뀜(그림, 효과 둘다)
+          // 예를들어서 아이템 블록 맞춰서 접착 아이템 떨어지고 있는데 그와중에 다른 아이템 블록 맞춰서 길어지는 아이템 떨어질때 이전에 아이템 블록 맞춰서 떨어지던 접착 아이템이 길어지는 아이템으로 바뀜(그림, 효과 둘다)
+          // 여기가 문제거나 위에 이미지 관련된 부분이 이상이 있는 것 같은데 모르겠음
+          // 다시 확인해보니까 떨어지는 아이템 전체가 그림까지 다른 아이템으로 바뀌는 것 같음
+          // 테스트 했던 상황이 좀 비정상적으로 극단적이긴 했는데 그래도 이상한 것 같음(블록 전체를 아이템 블록으로 바꾸고, 위에 상황을 만들기 위해 공의 y축 이속을 조금 높였음)
+          // 일반적인 상황에서는 이런 문제 생길 확률이 적긴 한데 내가 보통 상황에서 테스트하다가 겪은 일이라서 조금 신경쓰임
+          // 일단 해보고 해결 못하겠다 싶으면 임시 방편으로 아이템 블록 수를 줄이거나, 아이템 블록 간격을 벌리거나, 공의 y축 속도를 줄이거나 해야 할 것 같음
           randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
           chooseImage.src = randomImageUrl;
           animateItem(chooseImage, brickX, brickY, randomImageUrl);
