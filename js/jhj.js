@@ -1,6 +1,7 @@
 let dx = 0; // x축 방향으로 움직이는 속도 초기화한 값
 let dy = 0; // y축 방향으로 움직이는 속도 초기화한 값.
 const ballSize = 10; // 공 사이즈 크기 10으로 지정.
+let betweenBallAndPaddle = 0;
 
 function drawBall() {
   // 공 그리는 로직
@@ -37,7 +38,10 @@ function drawMoveBall() {
         clearInterval(interval);
         ctx.clearRect(0, y, 1080, canvas.height - paddleHeight); //그린거 다시 그리기위해 전체 백지화
         y = canvas.height - 130;
-        x = paddleXPosition + paddleWidth / 2; // 공의 x축 위치(가로 위치)
+        // console.log('공의 위치 = ' + x);
+        // console.log('패들의 중앙 위치 = ' + (paddleXPosition + paddleWidth / 2));
+        // console.log('공의 위치 - 패들의 중앙 위치 = ' + (x - (paddleXPosition + paddleWidth / 2)));
+        betweenBallAndPaddle = x - dx - (paddleXPosition + paddleWidth / 2);
         drawBall();
         drawPaddle();
         isStarted = false;
@@ -94,6 +98,7 @@ function drawMoveBall() {
       clearInterval(interval);
       document.querySelector('#lives').innerHTML = life_html;
       isStarted = false;  // rsh.js에 마우스무브 이벤트에 있는 if(!isStarted) 때문에 적어놓음
+      isEatStickItem = false;
       dy = 0;
       y = canvas.height - 130;  // 이거 없으면 공 세로 위치가 바닥에 꽂혀있는 상태로 움직임
       x = paddleXPosition + paddleWidth / 2; //공위치 초기화
