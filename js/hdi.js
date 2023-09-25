@@ -11,6 +11,8 @@ let life_html = '';
 let isBallfloor = false;
 let isGetItem2 = false;
 let itemCount = 0; // 아이템 블록 개수
+let StrongCount = 0;// 스트롱 블록 개수
+
 
 const strong_block = new Image();
 strong_block.src = "../img/strong_block.png";
@@ -30,6 +32,7 @@ const PowerballImage = new Image();
 PowerballImage.src = "../img/ball4.png";
 const longPaddleImage = new Image();
 longPaddleImage.src = "../img/long_paddle.png";
+
 
 
 //----------------------------------------------------------------
@@ -65,12 +68,13 @@ function drawStage1() {
 }
 
 // 2단계
+// 2단계
+// 2단계
 function drawStage2() {
     for (let i = 0; i < rows; i++) {
         Board[i] = [];
     }
     for (let i = 2; i < rows; i++) {
-
         for (let j = i + 3; j < cols; j++) {
             Board[i][j] = 1;
         }
@@ -80,7 +84,30 @@ function drawStage2() {
             Board[i][j] = 1;
         }
     }
+    
+    while (itemCount <= 8 && StrongCount <= 8) {
+        const randomRow = Math.floor(Math.random() * (rows - 2)) + 2; 
+        const randomCol = Math.floor(Math.random() * (cols - (randomRow + 3))) + (randomRow + 3); 
+        
+        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2) {
+            // 아이템을 5로, 혹은 2로 설정
+            if (Math.random() < 0.5) {
+                Board[randomRow][randomCol] = 5;
+            } else {
+                Board[randomRow][randomCol] = 2;
+            }
+            itemCount++; 
+            StrongCount++;
+        }
+    }
 }
+
+
+
+
+
+
+
 
 // 3단계
 function drawStage3() {
