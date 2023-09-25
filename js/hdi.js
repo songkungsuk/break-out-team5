@@ -10,6 +10,7 @@ let life = 3;
 let life_html = '';
 let isBallfloor = false;
 let isGetItem2 = false;
+let itemCount = 0; // 아이템 블록 개수
 
 const strong_block = new Image();
 strong_block.src = "../img/strong_block.png";
@@ -37,13 +38,22 @@ function drawStage1() {
     for (let i = 0; i < rows; i++) {
         Board[i] = [];
         for (let j = 0; j < cols; j++) {
-            if (j !== 0 && j !== 11 && i > 1) {
+            if (j !== 0 && j !== cols - 1 && i > 1) {
                 Board[i][j] = 1;
             }
         }
     }
 
-    // 안뽀개지는 블럭들 임의로 지정했어요 하드코딩 ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ
+    while (itemCount < 8) {
+        const randomRow = Math.floor(Math.random() * (rows - 2)) + 2; // 2 이상의 행
+        const randomCol = Math.floor(Math.random() * (cols - 2)) + 1; // 1 이상, cols - 2 이하의 열
+        if (Board[randomRow][randomCol] !== 5) {
+            Board[randomRow][randomCol] = 5; 
+            itemCount++;
+        }
+    }
+
+    // 안뽀개지는 블럭들 임의로 지정
     Board[6][5] = 10;
     Board[6][6] = 10;
     Board[6][4] = 10;
@@ -52,8 +62,8 @@ function drawStage1() {
     Board[5][6] = 10;
     Board[5][4] = 10;
     Board[5][7] = 10;
-
 }
+
 // 2단계
 function drawStage2() {
     for (let i = 0; i < rows; i++) {
