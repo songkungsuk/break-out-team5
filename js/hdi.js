@@ -116,10 +116,41 @@ function drawStage3() {
         for (let j = 0; j < cols; j++) {
             if (i % 2 === 0 && j % 2 === 1) {
                 Board[i][j] = 1;
-            }
-            else if (i % 2 === 1 && j % 2 === 0) {
+            } else if (i % 2 === 1 && j % 2 === 0) {
                 Board[i][j] = 1;
+            } else {
+                Board[i][j] = 0; // 나머지 요소 초기화 (0 또는 다른 값으로 초기화)
             }
         }
     }
+
+    // 아이템 블록 5개 생성했는데 기존에 가운데 블록 생성되어있어서 일부러 생성한건지 몰라서 그냥 냅둠 stage2도 마찬가지
+    let itemCount = 0;
+    while (itemCount < 5) {
+        const randomRow = Math.floor(Math.random() * rows);
+        const randomCol = Math.floor(Math.random() * cols);
+
+        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2 && Board[randomRow][randomCol] !== 9) {
+            Board[randomRow][randomCol] = 5; // 아이템 블록
+            itemCount++;
+        }
+    }
+
+    // 스트롱 블록 5개 생성
+    let strongCount = 0;
+    while (strongCount < 5) {
+        const randomRow = Math.floor(Math.random() * rows);
+        const randomCol = Math.floor(Math.random() * cols);
+
+        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2 && Board[randomRow][randomCol] !== 9) {
+            Board[randomRow][randomCol] = 2; // 스트롱 블록
+            strongCount++;
+        }
+    }
+
+    // nobroken_block 배치
+    Board[9][0] = 9; // nobroken_block 오른쪽 아래
+    Board[8][11] = 9; // nobroken_block 왼쪽 아래
 }
+
+
