@@ -8,8 +8,8 @@ const Board = []; //배열 초기화
 let stage = 1; //스테이지 번호
 let remains = 0; // 남아있는 블럭 체크용 변수
 const imageUrls = [
-  // "img/item1.png",
-  // "img/item2.png",
+   "img/item1.png",
+   "img/item2.png",
   "img/item3.png",
   "img/item4.png"
 ];
@@ -146,7 +146,7 @@ function nextStage() {
 
 
 //임의로 스테이지 추가해서 확인중인것 이거바꾸면 블럭 전체 모양바뀜 ㅇㅇ 이넘으로 스테이지 그림
-drawStage3();
+drawStage1();
 // -----------------------------------------------------------------------
 /*
 정해준이 수정함
