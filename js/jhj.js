@@ -99,7 +99,7 @@ function drawMoveBall() {
     document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
 
     if (life === 0) { //목숨이 없어지면?
-      alert("게임 종료ㅋㅋ") //ㅋㅋ
+      alert("게임 종료") //ㅋㅋ
       clearInterval(interval);  // 이거 없으면 공 위치가 초기화가 안되서 31번줄 if문에 계속 걸려서 경고창 뜨는것 같아서 넣었음.
       document.location.reload();
     } else {
