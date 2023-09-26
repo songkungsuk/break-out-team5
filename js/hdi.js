@@ -158,8 +158,8 @@ function drawStage3() {
     }
 
     // nobroken_block 배치
-    Board[9][0] = 9; // nobroken_block 오른쪽 아래
-    Board[8][11] = 9; // nobroken_block 왼쪽 아래
+    Board[9][0] = 10; // nobroken_block 오른쪽 아래
+    Board[8][11] = 10; // nobroken_block 왼쪽 아래
 }
 
 

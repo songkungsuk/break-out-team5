@@ -224,7 +224,7 @@ function drawBoard() {
           // 일반적인 상황에서는 이런 문제 생길 확률이 적긴 한데 내가 보통 상황에서 테스트하다가 겪은 일이라서 조금 신경쓰임
           // 일단 해보고 해결 못하겠다 싶으면 임시 방편으로 아이템 블록 수를 줄이거나, 아이템 블록 간격을 벌리거나, 공의 y축 속도를 줄이거나 해야 할 것 같음
 
-          // 이 두 줄을 if (Board[i][j] === 5) { 로 옮겨봤는데 그렇게 하면 randomImageUrl이 계속 바뀜, 인터벌 할때마다 drawBoard()도 계속 실행되서 그런 것 같음
+          // 이 두 줄을 if (Board[i][j] === 5) { 로 옮겨봤는데 그렇게 하면 randomImageUrl이 계속 바뀜, 인터벌 할때마다 drawBoard()도 계속 실행되서 그런 것 같음 - 네[경석] 설계를 애초에 블럭이 없어질때를 노린거라 그래요
           randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
           chooseImage.src = randomImageUrl;
 
