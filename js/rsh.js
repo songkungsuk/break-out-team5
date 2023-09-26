@@ -4,11 +4,13 @@ let paddleXPosition = (canvas.width - paddleWidth) / 2;     // 공 받이의 x�
 let effect = false; // 공이 패들을 맞았을때 나오는 이펙트
 // 공 받이 그리는 함수
 function drawPaddle() {
-    if(!effect){
-        ctx.drawImage(paddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+    if(effect){
+        ctx.drawImage(paddleImage2, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+    } else if(isEatStickItem) {
+        ctx.drawImage(stickyPaddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);   
     }
     else{
-        ctx.drawImage(paddleImage2, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
+        ctx.drawImage(paddleImage, paddleXPosition, canvas.height - 100, paddleWidth, paddleHeight);
     }
 }
 
