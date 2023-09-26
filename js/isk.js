@@ -13,8 +13,9 @@ const imageUrls = [
   "img/item3.png",
   "img/item4.png"
 ];
-
 let randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+
+
 const chooseImage = new Image(); // 이미지 객채 생성
 let isEatStickItem = false; // 접착 아이템 먹었는지
 
@@ -43,7 +44,7 @@ function PowerballItemTimeOut() {
 
 
 // 아이템 그리는 함수
-function animateItem(chooseImage, x, y, Url) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
+function animateItem(x, y, Url) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
   //이거 계산이 패들 세로길이 + 패들위치 이렇게하면되요
   const paddleY = canvas.height - paddleHeight - 100;
   if (y <= canvas.height) {
@@ -51,6 +52,7 @@ function animateItem(chooseImage, x, y, Url) { //이거 매개변수를 자꾸 U
   }
   // 캔버스 높이에서 떨어지면
   y += 5; //이미지 내려가는 속도 조절할 수 있음
+  chooseImage.src = Url;
   ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 위치
   if (
     x < paddleXPosition + paddleWidth && //?
@@ -61,7 +63,7 @@ function animateItem(chooseImage, x, y, Url) { //이거 매개변수를 자꾸 U
     scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50;
     ctx.clearRect(x, y - 5, chooseImage.width, chooseImage.height); // 이미지를 충돌 시 지움.
     player.play(eat_item);//효과음재생
-
+    console.log(Url);
     //먹은 아이템에 대해서
     if (Url == 'img/item1.png') {
       life++; // 목숨증가
@@ -85,7 +87,7 @@ function animateItem(chooseImage, x, y, Url) { //이거 매개변수를 자꾸 U
       }, 10000);
     }
   } else if (!isBallfloor) { //공안떨어졌으면 이르케그림
-    requestAnimationFrame(() => animateItem(chooseImage, x, y + 1, randomImageUrl)); // 나는 화살표함수모르는데.. -> 여기 animateItem 마지막 매개변수 일부러 안넣은건지 뭔지 모르겠는데 넣으니까 위에 Url=randomImageUrl로 안해도 되서 넣었음
+    requestAnimationFrame(() => animateItem(x, y + 1, Url)); // 나는 화살표함수모르는데.. -> 여기 animateItem 마지막 매개변수 일부러 안넣은건지 뭔지 모르겠는데 넣으니까 위에 Url=randomImageUrl로 안해도 되서 넣었음
   } else { //떨어지면 아이템없에버림 어디떨어진지 모르니까 걍 전체 백지화시킴..
     ctx.clearRect(0, 0, canvas.width, canvas.height); //그린거 다시 그리기위해 전체 백지화
     drawPaddle(); // 공받아치는 판
@@ -102,8 +104,11 @@ function checkBoard() {
   //전체적으로 남은블럭이있는지 둘러본다
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
-      if (Board[i][j] == 1 || Board[i][j] == 2 || Board[i][j] == 5) {
-        remains++;
+      if(Board[i].length > 0 && Board[i][j]) {
+        if (Board[i][j].blockNum == 1 || Board[i][j].blockNum == 2 || Board[i][j].blockNum == 5) {
+          remains++;
+        }
+
       }
     }
   }
@@ -154,94 +159,95 @@ drawStage1();
 function drawBoard() {
   for (let i = 0; i < Board.length; i++) {
     for (let j = 0; j < Board[i].length; j++) {
-      if (Board[i][j] >= 1) {
-        // 1 이상으로 설정하면 다양한 블록들을 처리할수있겠지.
-        const brickX = j * (block_width + 1) + 15; // x좌표값 계산
-        const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
-
-        // 충돌 감지 및 블록 그리기
-        // 공이 그려지는좌표가 블럭안으로 들어간경우
-        if (
-          x + ballSize >= brickX &&
-          x <= brickX + block_width &&
-          y + ballSize >= brickY &&
-          y <= brickY + block_height
-        ) {
-          // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
-          Board[i][j] -= 1;
-          player.play(attack_block);
-          // 보드의 남아있는 블럭을 체크 없으면 다음스테이지
-          checkBoard();
-
-          if (Board[i][j] === 0) {
-            // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
-            scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10; // 수정하셔도 됩니다
-          }
-          // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
-          // 충돌 지점 계산
-          const collisionX = x + ballSize / 2;
-          const collisionY = y + ballSize / 2;
-
-          // 블록의 오른쪽끝 아래쪽끝 좌표 계산
-          const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
-          const blockY = brickY + block_height;
-
-          // x,y 좌표를 기준으로 블럭이 처음들어갔을때
-
-          // 이거좀바꾸지마셈
-          // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
-          if (!isGetItem2 || Board[i][j] >=9) {
-            if (collisionX >= brickX - 1 && collisionX <= blockX - 1 || brickY < collisionY || brickY >= collisionY) {
-              dy = -dy;
+      if(Board[i].length > 0 && Board[i][j]) {
+        if (Board[i][j].blockNum >= 1) {
+          // 1 이상으로 설정하면 다양한 블록들을 처리할수있겠지.
+          const brickX = j * (block_width + 1) + 15; // x좌표값 계산
+          const brickY = i * (block_height + 1) + 10; // y 좌표값 계산
+  
+          // 충돌 감지 및 블록 그리기
+          // 공이 그려지는좌표가 블럭안으로 들어간경우
+          if (
+            x + ballSize >= brickX &&
+            x <= brickX + block_width &&
+            y + ballSize >= brickY &&
+            y <= brickY + block_height
+          ) {
+            // 충돌 발생 시 블록을 없애고 값 0으로 변경 블록 사라짐
+            Board[i][j].blockNum -= 1;
+            player.play(attack_block);
+            // 보드의 남아있는 블럭을 체크 없으면 다음스테이지
+            checkBoard();
+  
+            if (Board[i][j].blockNum === 0) {
+              // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
+              scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10; // 수정하셔도 됩니다
+            }
+            // 45~69 정해준이 수정함. -> 송경석이 코드 다잡아먹어버림;;
+            // 충돌 지점 계산
+            const collisionX = x + ballSize / 2;
+            const collisionY = y + ballSize / 2;
+  
+            // 블록의 오른쪽끝 아래쪽끝 좌표 계산
+            const blockX = brickX + block_width; // 56 ~ 72수정했습니다 -경석
+            const blockY = brickY + block_height;
+  
+            // x,y 좌표를 기준으로 블럭이 처음들어갔을때
+  
+            // 이거좀바꾸지마셈
+            // 공의 중심좌표가 블럭의 상단 줄과 하단줄에 있을때
+            if (!isGetItem2 || Board[i][j].blockNum >=9) {
+              if (collisionX >= brickX - 1 && collisionX <= blockX - 1 || brickY < collisionY || brickY >= collisionY) {
+                dy = -dy;
+              }
+            }
+            // 공의 중심좌표가 블럭의 왼쪽줄과 오른줄에 있을때
+            if (!isGetItem2 || Board[i][j].blockNum >=9) {
+              if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
+                dx = -dx;
+              }
             }
           }
-          // 공의 중심좌표가 블럭의 왼쪽줄과 오른줄에 있을때
-          if (!isGetItem2 || Board[i][j] >=9) {
-            if (collisionY >= brickY && collisionY <= blockY || collisionX == brickX || collisionX == blockX) {
-              dx = -dx;
-            }
+          //-------------------------- 송경석--------------
+          if (Board[i][j].blockNum === 0) {
+            //블럭 안그림
           }
+          if (Board[i][j].blockNum === 1) {
+            // 블록을 그립니다.
+            // 일반 블럭 그림
+            ctx.drawImage(nomal_block, brickX, brickY);
+          }
+          if (Board[i][j].blockNum === 2) {
+            //강화 블럭 그림
+            ctx.drawImage(strong_block, brickX, brickY);
+          }
+          if (Board[i][j].blockNum === 4) {
+            Board[i][j].blockNum = 0; // 
+            // 아이템 떨어지는 중에 다른 아이템 블록 맞춰서 다른 아이템 블록 떨구면 떨어지던 아이템이 가장 마지막에 맞힌 아이템 블록의 아이템으로 바뀜(그림, 효과 둘다)
+            // 예를들어서 아이템 블록 맞춰서 접착 아이템 떨어지고 있는데 그와중에 다른 아이템 블록 맞춰서 길어지는 아이템 떨어질때 이전에 아이템 블록 맞춰서 떨어지던 접착 아이템이 길어지는 아이템으로 바뀜(그림, 효과 둘다)
+            // 여기가 문제거나 위에 이미지 관련된 부분이 이상이 있는 것 같은데 모르겠음
+            // 테스트 했던 상황이 좀 비정상적으로 극단적이긴 했는데 그래도 이상한 것 같음(블록 전체를 아이템 블록으로 바꾸고, 위에 상황을 만들기 위해 공의 y축 이속을 조금 높였음)
+            // 일반적인 상황에서는 이런 문제 생길 확률이 적긴 한데 내가 보통 상황에서 테스트하다가 겪은 일이라서 조금 신경쓰임
+            // 일단 해보고 해결 못하겠다 싶으면 임시 방편으로 아이템 블록 수를 줄이거나, 아이템 블록 간격을 벌리거나, 공의 y축 속도를 줄이거나 해야 할 것 같음
+            
+            // chooseImage.src = Board[i][j].randomImageUrl; // 이미지쪽에 문제
+            animateItem(brickX, brickY, Board[i][j].randomImageUrl);
+          }
+          if (Board[i][j].blockNum === 5) {
+            // 여기에서 떨어질 아이템을 미리 정해놓고 해야되는 것 같아서 여러가지를 해봤는데 안됨
+            // randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+            ctx.drawImage(itemImage, brickX, brickY);
+          }
+          if (Board[i][j].blockNum === 9) {
+            Board[i][j].blockNum += 1; // 블럭상태유지
+            ctx.drawImage(nobroken_block, brickX, brickY);
+          }
+          if (Board[i][j].blockNum === 10) {
+            ctx.drawImage(nobroken_block, brickX, brickY);
+          }
+          //-------------------------------------------------
         }
-        //-------------------------- 송경석--------------
-        if (Board[i][j] === 0) {
-          //블럭 안그림
-        }
-        if (Board[i][j] === 1) {
-          // 블록을 그립니다.
-          // 일반 블럭 그림
-          ctx.drawImage(nomal_block, brickX, brickY);
-        }
-        if (Board[i][j] === 2) {
-          //강화 블럭 그림
-          ctx.drawImage(strong_block, brickX, brickY);
-        }
-        if (Board[i][j] === 4) {
-          Board[i][j] = 0; // 
-          // 아이템 떨어지는 중에 다른 아이템 블록 맞춰서 다른 아이템 블록 떨구면 떨어지던 아이템이 가장 마지막에 맞힌 아이템 블록의 아이템으로 바뀜(그림, 효과 둘다)
-          // 예를들어서 아이템 블록 맞춰서 접착 아이템 떨어지고 있는데 그와중에 다른 아이템 블록 맞춰서 길어지는 아이템 떨어질때 이전에 아이템 블록 맞춰서 떨어지던 접착 아이템이 길어지는 아이템으로 바뀜(그림, 효과 둘다)
-          // 여기가 문제거나 위에 이미지 관련된 부분이 이상이 있는 것 같은데 모르겠음
-          // 테스트 했던 상황이 좀 비정상적으로 극단적이긴 했는데 그래도 이상한 것 같음(블록 전체를 아이템 블록으로 바꾸고, 위에 상황을 만들기 위해 공의 y축 이속을 조금 높였음)
-          // 일반적인 상황에서는 이런 문제 생길 확률이 적긴 한데 내가 보통 상황에서 테스트하다가 겪은 일이라서 조금 신경쓰임
-          // 일단 해보고 해결 못하겠다 싶으면 임시 방편으로 아이템 블록 수를 줄이거나, 아이템 블록 간격을 벌리거나, 공의 y축 속도를 줄이거나 해야 할 것 같음
 
-          // 이 두 줄을 if (Board[i][j] === 5) { 로 옮겨봤는데 그렇게 하면 randomImageUrl이 계속 바뀜, 인터벌 할때마다 drawBoard()도 계속 실행되서 그런 것 같음
-          randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-          chooseImage.src = randomImageUrl;
-
-          animateItem(chooseImage, brickX, brickY, randomImageUrl);
-        }
-        if (Board[i][j] === 5) {
-          // 여기에서 떨어질 아이템을 미리 정해놓고 해야되는 것 같아서 여러가지를 해봤는데 안됨
-          ctx.drawImage(itemImage, brickX, brickY);
-        }
-        if (Board[i][j] === 9) {
-          Board[i][j] += 1; // 블럭상태유지
-          ctx.drawImage(nobroken_block, brickX, brickY);
-        }
-        if (Board[i][j] === 10) {
-          ctx.drawImage(nobroken_block, brickX, brickY);
-        }
-        //-------------------------------------------------
       }
     }
   }
