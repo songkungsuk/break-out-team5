@@ -85,23 +85,30 @@ function drawStage2() {
             Board[i][j] = 1;
         }
     }
-    
-    while (itemCount <= 8 && StrongCount <= 8) {
-        const randomRow = Math.floor(Math.random() * (rows - 2)) + 2; 
-        const randomCol = Math.floor(Math.random() * (cols - (randomRow + 3))) + (randomRow + 3); 
-        
-        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2) {
-            // 아이템을 5로, 혹은 2로 설정
-            if (Math.random() < 0.5) {
-                Board[randomRow][randomCol] = 5;
-            } else {
-                Board[randomRow][randomCol] = 2;
+
+    itemCount = 0; // 초기화 안해서 아이템블록이랑 스트롱블록이 생성이 안되거였음.
+    StrongCount = 0;
+
+    while (itemCount <= 8 && StrongCount <= 7) {
+        const randomRow = Math.floor(Math.random() * (rows - 2)) + 2;
+        const randomCol = Math.floor(Math.random() * (cols - (randomRow + 3))) + (randomRow + 3);
+
+        // 생성될 블록의 좌표가 게임 보드의 범위 내에 있는지 확인
+        if (randomRow >= 0 && randomRow < rows && randomCol >= 0 && randomCol < cols) {
+            if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2) {
+                // 아이템을 5로, 혹은 2로 설정
+                if (Math.random() < 0.5) {
+                    Board[randomRow][randomCol] = 5;
+                    itemCount++;
+                } else {
+                    Board[randomRow][randomCol] = 2;
+                    StrongCount++;
+                }
             }
-            itemCount++; 
-            StrongCount++;
         }
     }
 }
+
 
 
 
@@ -126,7 +133,8 @@ function drawStage3() {
     }
 
     // 아이템 블록 5개 생성했는데 기존에 가운데 블록 생성되어있어서 일부러 생성한건지 몰라서 그냥 냅둠 stage2도 마찬가지
-    let itemCount = 0;
+
+    itemCount = 0;
     while (itemCount < 5) {
         const randomRow = Math.floor(Math.random() * rows);
         const randomCol = Math.floor(Math.random() * cols);
@@ -138,7 +146,7 @@ function drawStage3() {
     }
 
     // 스트롱 블록 5개 생성
-    let strongCount = 0;
+    StrongCount = 0;
     while (strongCount < 5) {
         const randomRow = Math.floor(Math.random() * rows);
         const randomCol = Math.floor(Math.random() * cols);
