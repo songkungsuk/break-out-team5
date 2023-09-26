@@ -14,7 +14,9 @@ const imageUrls = [
   "img/item4.png"
 ];
 let randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-
+let longPaddleItemTimeOutId;
+let PowerballItemTimeOutId;
+let stickyPaddleItemTimeOutId;
 
 const chooseImage = new Image(); // 이미지 객채 생성
 let isEatStickItem = false; // 접착 아이템 먹었는지
@@ -25,7 +27,7 @@ let isEatStickItem = false; // 접착 아이템 먹었는지
 
 // 20초후에 패들길이가 원래대로 돌아오게하는것
 function longPaddleItemTimeOut() {
-  setTimeout(function () {
+  longPaddleItemTimeOutId = setTimeout(function () {
     paddleWidth = 150;
     ctx.clearRect(0, y - 100, 1080, canvas.height - paddleHeight);
     drawPaddle();
@@ -34,11 +36,17 @@ function longPaddleItemTimeOut() {
 
 // 10초후에 블럭 마구잡이로 부수는거 원래대로 돌아오게함
 function PowerballItemTimeOut() {
-  setTimeout(function () {
+  PowerballItemTimeOutId = setTimeout(function () {
     isGetItem2 = false;
     ctx.clearRect(0, y - 100, 1080, canvas.height - paddleHeight);
     drawBall();
     drawPaddle();
+  }, 10000);
+}
+
+function stickyPaddleItemTimeOut() {
+  stickyPaddleItemTimeOutId = setTimeout(function() {
+    isEatStickItem = false;
   }, 10000);
 }
 
@@ -74,17 +82,16 @@ function animateItem(x, y, Url) { //이거 매개변수를 자꾸 Undifined 로 
       document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
     } else if (Url == 'img/item2.png') {
       isGetItem2 = true;
+      clearTimeout(PowerballItemTimeOutId);
       PowerballItemTimeOut();
     } else if (Url == 'img/item3.png') {
-      // console.log(chooseImage.src.slice(21));
       paddleWidth = 200;
+      clearTimeout(longPaddleItemTimeOutId);
       longPaddleItemTimeOut();
     } else if (Url == 'img/item4.png') {
-      // console.log(chooseImage.src.slice(21));
       isEatStickItem = true;
-      setTimeout(function() {
-        isEatStickItem = false;
-      }, 10000);
+      clearTimeout(stickyPaddleItemTimeOutId);
+      stickyPaddleItemTimeOut();
     }
   } else if (!isBallfloor) { //공안떨어졌으면 이르케그림
     requestAnimationFrame(() => animateItem(x, y + 1, Url)); // 나는 화살표함수모르는데.. -> 여기 animateItem 마지막 매개변수 일부러 안넣은건지 뭔지 모르겠는데 넣으니까 위에 Url=randomImageUrl로 안해도 되서 넣었음
@@ -223,19 +230,9 @@ function drawBoard() {
           }
           if (Board[i][j].blockNum === 4) {
             Board[i][j].blockNum = 0; // 
-            // 아이템 떨어지는 중에 다른 아이템 블록 맞춰서 다른 아이템 블록 떨구면 떨어지던 아이템이 가장 마지막에 맞힌 아이템 블록의 아이템으로 바뀜(그림, 효과 둘다)
-            // 예를들어서 아이템 블록 맞춰서 접착 아이템 떨어지고 있는데 그와중에 다른 아이템 블록 맞춰서 길어지는 아이템 떨어질때 이전에 아이템 블록 맞춰서 떨어지던 접착 아이템이 길어지는 아이템으로 바뀜(그림, 효과 둘다)
-            // 여기가 문제거나 위에 이미지 관련된 부분이 이상이 있는 것 같은데 모르겠음
-            // 테스트 했던 상황이 좀 비정상적으로 극단적이긴 했는데 그래도 이상한 것 같음(블록 전체를 아이템 블록으로 바꾸고, 위에 상황을 만들기 위해 공의 y축 이속을 조금 높였음)
-            // 일반적인 상황에서는 이런 문제 생길 확률이 적긴 한데 내가 보통 상황에서 테스트하다가 겪은 일이라서 조금 신경쓰임
-            // 일단 해보고 해결 못하겠다 싶으면 임시 방편으로 아이템 블록 수를 줄이거나, 아이템 블록 간격을 벌리거나, 공의 y축 속도를 줄이거나 해야 할 것 같음
-            
-            // chooseImage.src = Board[i][j].randomImageUrl; // 이미지쪽에 문제
             animateItem(brickX, brickY, Board[i][j].randomImageUrl);
           }
           if (Board[i][j].blockNum === 5) {
-            // 여기에서 떨어질 아이템을 미리 정해놓고 해야되는 것 같아서 여러가지를 해봤는데 안됨
-            // randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             ctx.drawImage(itemImage, brickX, brickY);
           }
           if (Board[i][j].blockNum === 9) {
