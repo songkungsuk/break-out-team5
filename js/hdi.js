@@ -43,7 +43,9 @@ function drawStage1() {
         Board[i] = [];
         for (let j = 0; j < cols; j++) {
             if (j !== 0 && j !== cols - 1 && i > 1) {
-                Board[i][j] = 1;
+                Board[i][j] = {
+                    blockNum: 1,
+                };
             }
         }
     }
@@ -51,21 +53,22 @@ function drawStage1() {
     while (itemCount < 8) {
         const randomRow = Math.floor(Math.random() * (rows - 2)) + 2; // 2 이상의 행
         const randomCol = Math.floor(Math.random() * (cols - 2)) + 1; // 1 이상, cols - 2 이하의 열
-        if (Board[randomRow][randomCol] !== 5) {
-            Board[randomRow][randomCol] = 5; 
+        if (Board[randomRow][randomCol].blockNum !== 5) {
+            Board[randomRow][randomCol].blockNum = 5;
+            Board[randomRow][randomCol].randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             itemCount++;
         }
     }
 
     // 안뽀개지는 블럭들 임의로 지정
-    Board[6][5] = 10;
-    Board[6][6] = 10;
-    Board[6][4] = 10;
-    Board[6][7] = 10;
-    Board[5][5] = 10;
-    Board[5][6] = 10;
-    Board[5][4] = 10;
-    Board[5][7] = 10;
+    Board[6][5].blockNum = 10;
+    Board[6][6].blockNum = 10;
+    Board[6][4].blockNum = 10;
+    Board[6][7].blockNum = 10;
+    Board[5][5].blockNum = 10;
+    Board[5][6].blockNum = 10;
+    Board[5][4].blockNum = 10;
+    Board[5][7].blockNum = 10;
 }
 
 // 2단계
@@ -77,12 +80,16 @@ function drawStage2() {
     }
     for (let i = 2; i < rows; i++) {
         for (let j = i + 3; j < cols; j++) {
-            Board[i][j] = 1;
+            Board[i][j] = {
+                blockNum: 1
+            }
         }
     }
     for (let i = rows; i > 1; i--) {
         for (let j = 0; j < rows - i; j++) {
-            Board[i][j] = 1;
+            Board[i][j] = {
+                blockNum: 1
+            }
         }
     }
 
@@ -95,13 +102,13 @@ function drawStage2() {
 
         // 생성될 블록의 좌표가 게임 보드의 범위 내에 있는지 확인
         if (randomRow >= 0 && randomRow < rows && randomCol >= 0 && randomCol < cols) {
-            if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2) {
+            if (Board[randomRow][randomCol].blockNum !== 5 && Board[randomRow][randomCol].blockNum !== 2) {
                 // 아이템을 5로, 혹은 2로 설정
                 if (Math.random() < 0.5) {
-                    Board[randomRow][randomCol] = 5;
+                    Board[randomRow][randomCol].blockNum = 5;
                     itemCount++;
                 } else {
-                    Board[randomRow][randomCol] = 2;
+                    Board[randomRow][randomCol].blockNum = 2;
                     StrongCount++;
                 }
             }
@@ -123,11 +130,17 @@ function drawStage3() {
         Board[i] = [];
         for (let j = 0; j < cols; j++) {
             if (i % 2 === 0 && j % 2 === 1) {
-                Board[i][j] = 1;
+                Board[i][j] = {
+                    blockNum: 1
+                }
             } else if (i % 2 === 1 && j % 2 === 0) {
-                Board[i][j] = 1;
+                Board[i][j] = {
+                    blockNum: 1
+                }
             } else {
-                Board[i][j] = 0; // 나머지 요소 초기화 (0 또는 다른 값으로 초기화)
+                Board[i][j] = {
+                    blockNum: 0
+                } // 나머지 요소 초기화 (0 또는 다른 값으로 초기화)
             }
         }
     }
@@ -139,27 +152,27 @@ function drawStage3() {
         const randomRow = Math.floor(Math.random() * rows);
         const randomCol = Math.floor(Math.random() * cols);
 
-        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2 && Board[randomRow][randomCol] !== 9) {
-            Board[randomRow][randomCol] = 5; // 아이템 블록
+        if (Board[randomRow][randomCol].blockNum !== 5 && Board[randomRow][randomCol].blockNum !== 2 && Board[randomRow][randomCol].blockNum !== 9) {
+            Board[randomRow][randomCol].blockNum = 5; // 아이템 블록
             itemCount++;
         }
     }
 
     // 스트롱 블록 5개 생성
     StrongCount = 0;
-    while (strongCount < 5) {
+    while (StrongCount < 5) {
         const randomRow = Math.floor(Math.random() * rows);
         const randomCol = Math.floor(Math.random() * cols);
 
-        if (Board[randomRow][randomCol] !== 5 && Board[randomRow][randomCol] !== 2 && Board[randomRow][randomCol] !== 9) {
-            Board[randomRow][randomCol] = 2; // 스트롱 블록
-            strongCount++;
+        if (Board[randomRow][randomCol].blockNum !== 5 && Board[randomRow][randomCol].blockNum !== 2 && Board[randomRow][randomCol].blockNum !== 9) {
+            Board[randomRow][randomCol].blockNum = 2; // 스트롱 블록
+            StrongCount++;
         }
     }
 
     // nobroken_block 배치
-    Board[9][0] = 9; // nobroken_block 오른쪽 아래
-    Board[8][11] = 9; // nobroken_block 왼쪽 아래
+    Board[9][0].blockNum = 9; // nobroken_block 오른쪽 아래
+    Board[8][11].blockNum = 9; // nobroken_block 왼쪽 아래
 }
 
 
