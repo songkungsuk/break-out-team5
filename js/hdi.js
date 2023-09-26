@@ -32,7 +32,8 @@ const PowerballImage = new Image();
 PowerballImage.src = "../img/ball4.png";
 const longPaddleImage = new Image();
 longPaddleImage.src = "../img/long_paddle.png";
-
+const stickyPaddleImage = new Image();
+stickyPaddleImage.src = "../img/sticky_paddle.png";
 
 
 //----------------------------------------------------------------
