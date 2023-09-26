@@ -35,7 +35,7 @@ longPaddleImage.src = "../img/long_paddle.png";
 const stickyPaddleImage = new Image();
 stickyPaddleImage.src = "../img/sticky_paddle.png";
 
-
+// 코드 마음대로 바꿔서 죄송합니다. 아이템 버그 고치는데 이 방법밖에 생각이 안나서.. 원래 배열에 들어갔던 숫자가 blockNum이고 다른건 신경 안 쓰셔도 됩니다. -류승호-
 //----------------------------------------------------------------
 //  1단계
 function drawStage1() {
@@ -106,6 +106,7 @@ function drawStage2() {
                 // 아이템을 5로, 혹은 2로 설정
                 if (Math.random() < 0.5) {
                     Board[randomRow][randomCol].blockNum = 5;
+                    Board[randomRow][randomCol].randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
                     itemCount++;
                 } else {
                     Board[randomRow][randomCol].blockNum = 2;
@@ -154,6 +155,7 @@ function drawStage3() {
 
         if (Board[randomRow][randomCol].blockNum !== 5 && Board[randomRow][randomCol].blockNum !== 2 && Board[randomRow][randomCol].blockNum !== 9) {
             Board[randomRow][randomCol].blockNum = 5; // 아이템 블록
+            Board[randomRow][randomCol].randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             itemCount++;
         }
     }
@@ -171,8 +173,8 @@ function drawStage3() {
     }
 
     // nobroken_block 배치
-    Board[9][0].blockNum = 9; // nobroken_block 오른쪽 아래
-    Board[8][11].blockNum = 9; // nobroken_block 왼쪽 아래
+    Board[9][0].blockNum = 10; // nobroken_block 오른쪽 아래
+    Board[8][11].blockNum = 10; // nobroken_block 왼쪽 아래
 }
 
 
