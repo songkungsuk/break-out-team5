@@ -8,8 +8,8 @@ const Board = []; //배열 초기화
 let stage = 1; //스테이지 번호
 let remains = 0; // 남아있는 블럭 체크용 변수
 const imageUrls = [
-  // "img/item1.png",
-  // "img/item2.png",
+  "img/item1.png",
+  "img/item2.png",
   "img/item3.png",
   "img/item4.png"
 ];
@@ -43,13 +43,12 @@ function PowerballItemTimeOut() {
 
 
 // 아이템 그리는 함수
-function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
+function animateItem(chooseImage, x, y, Url) { //이거 매개변수를 자꾸 Undifined 로 받아서 강제로 접목시킴ㅋㅋㅋㅋㅋㅋㅋ 찾아보니까 자바스크립트 특성이래요
   //이거 계산이 패들 세로길이 + 패들위치 이렇게하면되요
   const paddleY = canvas.height - paddleHeight - 100;
   if (y <= canvas.height) {
     ctx.clearRect(x, y, chooseImage.width, chooseImage.height);
   }
-
   // 캔버스 높이에서 떨어지면
   y += 5; //이미지 내려가는 속도 조절할 수 있음
   ctx.drawImage(chooseImage, x + (block_width / 2), y);//이미지 그리는 위치
@@ -75,18 +74,18 @@ function animateItem(chooseImage, x, y, Url = randomImageUrl) { //이거 매개�
       isGetItem2 = true;
       PowerballItemTimeOut();
     } else if (Url == 'img/item3.png') {
-      console.log(chooseImage.src.slice(21));
+      // console.log(chooseImage.src.slice(21));
       paddleWidth = 200;
       longPaddleItemTimeOut();
     } else if (Url == 'img/item4.png') {
-      console.log(chooseImage.src.slice(21));
+      // console.log(chooseImage.src.slice(21));
       isEatStickItem = true;
       setTimeout(function() {
         isEatStickItem = false;
       }, 10000);
     }
   } else if (!isBallfloor) { //공안떨어졌으면 이르케그림
-    requestAnimationFrame(() => animateItem(chooseImage, x, y + 1)); // 나는 화살표함수모르는데..
+    requestAnimationFrame(() => animateItem(chooseImage, x, y + 1, randomImageUrl)); // 나는 화살표함수모르는데.. -> 여기 animateItem 마지막 매개변수 일부러 안넣은건지 뭔지 모르겠는데 넣으니까 위에 Url=randomImageUrl로 안해도 되서 넣었음
   } else { //떨어지면 아이템없에버림 어디떨어진지 모르니까 걍 전체 백지화시킴..
     ctx.clearRect(0, 0, canvas.width, canvas.height); //그린거 다시 그리기위해 전체 백지화
     drawPaddle(); // 공받아치는 판
@@ -146,7 +145,7 @@ function nextStage() {
 
 
 //임의로 스테이지 추가해서 확인중인것 이거바꾸면 블럭 전체 모양바뀜 ㅇㅇ 이넘으로 스테이지 그림
-drawStage3();
+drawStage1();
 // -----------------------------------------------------------------------
 /*
 정해준이 수정함
@@ -221,15 +220,18 @@ function drawBoard() {
           // 아이템 떨어지는 중에 다른 아이템 블록 맞춰서 다른 아이템 블록 떨구면 떨어지던 아이템이 가장 마지막에 맞힌 아이템 블록의 아이템으로 바뀜(그림, 효과 둘다)
           // 예를들어서 아이템 블록 맞춰서 접착 아이템 떨어지고 있는데 그와중에 다른 아이템 블록 맞춰서 길어지는 아이템 떨어질때 이전에 아이템 블록 맞춰서 떨어지던 접착 아이템이 길어지는 아이템으로 바뀜(그림, 효과 둘다)
           // 여기가 문제거나 위에 이미지 관련된 부분이 이상이 있는 것 같은데 모르겠음
-          // 다시 확인해보니까 떨어지는 아이템 전체가 그림까지 다른 아이템으로 바뀌는 것 같음
           // 테스트 했던 상황이 좀 비정상적으로 극단적이긴 했는데 그래도 이상한 것 같음(블록 전체를 아이템 블록으로 바꾸고, 위에 상황을 만들기 위해 공의 y축 이속을 조금 높였음)
           // 일반적인 상황에서는 이런 문제 생길 확률이 적긴 한데 내가 보통 상황에서 테스트하다가 겪은 일이라서 조금 신경쓰임
           // 일단 해보고 해결 못하겠다 싶으면 임시 방편으로 아이템 블록 수를 줄이거나, 아이템 블록 간격을 벌리거나, 공의 y축 속도를 줄이거나 해야 할 것 같음
+
+          // 이 두 줄을 if (Board[i][j] === 5) { 로 옮겨봤는데 그렇게 하면 randomImageUrl이 계속 바뀜, 인터벌 할때마다 drawBoard()도 계속 실행되서 그런 것 같음
           randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
           chooseImage.src = randomImageUrl;
+
           animateItem(chooseImage, brickX, brickY, randomImageUrl);
         }
         if (Board[i][j] === 5) {
+          // 여기에서 떨어질 아이템을 미리 정해놓고 해야되는 것 같아서 여러가지를 해봤는데 안됨
           ctx.drawImage(itemImage, brickX, brickY);
         }
         if (Board[i][j] === 9) {
