@@ -73,22 +73,22 @@ function animateItem(x, y, Url) { //이거 매개변수를 자꾸 Undifined 로 
     player.play(eat_item);//효과음재생
     console.log(Url);
     //먹은 아이템에 대해서
-    if (Url == 'img/item1.png') {
+    if (Url == 'img/item1.png') { //목숨증가 아이템
       life++; // 목숨증가
       life_html = ''; //새로써야겠지?
       for (let i = 0; i < life; i++) {
         life_html += '<img src="/img/ball.png" alt="공"></img>';
       }
       document.querySelector('#lives').innerHTML = life_html; //목숨개수를 새로쓴다.
-    } else if (Url == 'img/item2.png') {
+    } else if (Url == 'img/item2.png') { //파워 아이템
       isGetItem2 = true;
       clearTimeout(PowerballItemTimeOutId);
       PowerballItemTimeOut();
-    } else if (Url == 'img/item3.png') {
+    } else if (Url == 'img/item3.png') { //패들길어지는 아이템
       paddleWidth = 200;
       clearTimeout(longPaddleItemTimeOutId);
       longPaddleItemTimeOut();
-    } else if (Url == 'img/item4.png') {
+    } else if (Url == 'img/item4.png') { // 접착아이템
       isEatStickItem = true;
       clearTimeout(stickyPaddleItemTimeOutId);
       stickyPaddleItemTimeOut();
@@ -186,7 +186,10 @@ function drawBoard() {
             // 보드의 남아있는 블럭을 체크 없으면 다음스테이지
             checkBoard();
   
-            if (Board[i][j].blockNum === 0) {
+            if (Board[i][j].blockNum === 0 && isGetItem2==true) {
+              // 송경석이 수정함, 파워아이템상태일때 점수오르는 폭을 늘렸습니다 게임끝났을때 모두가 똑같은점수면 안되니까.
+              scoreTitle.textContent = parseInt(scoreTitle.textContent) + 50; 
+            } else if (Board[i][j].blockNum === 0) {
               // 정해준이 수정함, 블록 하나당 10점 오르게 점수 표시해놨습니다
               scoreTitle.textContent = parseInt(scoreTitle.textContent) + 10; // 수정하셔도 됩니다
             }
